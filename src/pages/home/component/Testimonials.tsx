@@ -2,28 +2,28 @@ import { TestimonialGrid } from '@/components/ui/testimonial'
 import { motion } from 'framer-motion'
 
 
-  const testimonials = [
-    {
-      quote: 'Khi mưa lớn làm ngập úng ruộng lúa của tôi, khoản bồi thường được chuyển đến ví của tôi chỉ trong vài phút. Đây thực sự là một cách tiếp cận mới cho bảo hiểm nông nghiệp!',
-      author: 'Nguyễn Văn Minh',
-      role: 'Nông dân, Cần Thơ',
-    },
-    {
-      quote: "Tính minh bạch khi thấy hợp đồng bảo hiểm của tôi trên blockchain giúp tôi yên tâm rằng tôi đang nhận được đúng những gì tôi đã trả tiền.",
-      author: 'Trần Thị Hương',
-      role: 'Nông dân, An Giang',
-    },
-    {
-      quote: 'Là một nhà đầu tư, tôi đánh giá cao khả năng theo dõi hiệu suất của bể thanh khoản và nhận lợi nhuận ổn định từ việc cung cấp thanh khoản cho nền tảng.',
-      author: 'Lê Minh Tuấn',
-      role: 'Nhà đầu tư DeFi',
-    },
-    {
-      quote: 'Tôi đã từng mất trắng vụ mùa do hạn hán mà không có bảo hiểm. Giờ đây với bảo hiểm tham số, tôi có thể yên tâm canh tác mà không lo lắng về những rủi ro thời tiết.',
-      author: 'Phạm Văn Đức',
-      role: 'Nông dân, Đồng Tháp',
-    },
-  ];
+const testimonials = [
+  {
+    quote: 'When heavy rain flooded my rice field, the compensation was transferred to my wallet within minutes. This is truly a new approach to agricultural insurance!',
+    author: 'Nguyen Van Minh',
+    role: 'Farmer, Can Tho',
+  },
+  {
+    quote: "The transparency of seeing my insurance contract on the blockchain gives me peace of mind that I'm getting exactly what I paid for.",
+    author: 'Tran Thi Huong',
+    role: 'Farmer, An Giang',
+  },
+  {
+    quote: 'As an investor, I appreciate the ability to track the performance of the liquidity pool and receive stable returns from providing liquidity to the platform.',
+    author: 'Le Minh Tuan',
+    role: 'DeFi Investor',
+  },
+  {
+    quote: 'I once lost an entire harvest to drought without insurance. Now with parametric insurance, I can farm with confidence without worrying about weather risks.',
+    author: 'Pham Van Duc',
+    role: 'Farmer, Dong Thap',
+  },
+];
 
 const Testimonials = () => {
   return (
@@ -37,10 +37,10 @@ const Testimonials = () => {
             viewport={{ once: true, margin: "-100px" }}
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-green-400 to-cyan-300 dark:from-green-300 dark:to-cyan-200 bg-clip-text text-transparent">
-              Chia Sẻ Từ Người Dùng
+              User Testimonials
             </h2>
             <p className="text-xl text-foreground/70 max-w-3xl mx-auto">
-              Tham gia cùng hàng nghìn nông dân và nhà đầu tư đã thay đổi trải nghiệm bảo hiểm của họ:
+              Join thousands of farmers and investors who have transformed their insurance experience:
             </p>
           </motion.div>
           

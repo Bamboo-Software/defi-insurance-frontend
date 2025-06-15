@@ -23,26 +23,26 @@ const ConnectWallet = () => {
       id: 'metamask',
       name: 'MetaMask',
       icon: '🦊',
-      description: 'Kết nối với ví MetaMask của bạn',
+      description: 'Connect with your MetaMask wallet',
       popular: true,
     },
     {
       id: 'walletconnect',
       name: 'WalletConnect',
       icon: '🔗',
-      description: 'Quét với WalletConnect để kết nối',
+      description: 'Scan with WalletConnect to connect',
     },
     {
       id: 'coinbase',
       name: 'Coinbase Wallet',
       icon: '🪙',
-      description: 'Kết nối với ví Coinbase của bạn',
+      description: 'Connect with your Coinbase wallet',
     },
     {
       id: 'trustwallet',
       name: 'Trust Wallet',
       icon: '🛡️',
-      description: 'Kết nối với ví Trust Wallet của bạn',
+      description: 'Connect with your Trust Wallet',
     },
   ];
 
@@ -50,16 +50,16 @@ const ConnectWallet = () => {
     setConnectingWallet(walletId);
     setConnectionStatus('connecting');
     
-    // Mô phỏng quá trình kết nối
+    // Simulate connection process
     setTimeout(() => {
-      // Cho mục đích demo, hãy ngẫu nhiên thành công hoặc thất bại
-      const success = Math.random() > 0.3; // Tỷ lệ thành công 70%
+      // For demo purposes, randomly succeed or fail
+      const success = Math.random() > 0.3; // 70% success rate
       
       if (success) {
         setConnectionStatus('success');
       } else {
         setConnectionStatus('error');
-        setErrorMessage('Không thể kết nối với ví. Vui lòng thử lại.');
+        setErrorMessage('Unable to connect to wallet. Please try again.');
       }
     }, 2000);
   };
@@ -72,11 +72,11 @@ const ConnectWallet = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Phần Hero với nền gradient hoạt ảnh */}
+      {/* Hero section with animated gradient background */}
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background z-0"></div>
         
-        {/* Quả cầu gradient hoạt ảnh */}
+        {/* Animated gradient orbs */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full filter blur-3xl opacity-30 animate-blob"></div>
           <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-cyan-500/20 rounded-full filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
@@ -91,26 +91,26 @@ const ConnectWallet = () => {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary via-cyan-400 to-purple-500 bg-clip-text text-transparent">
-              Kết nối ví của bạn
+              Connect Your Wallet
             </h1>
             <p className="text-xl text-foreground/70 mb-8">
-              Liên kết ví blockchain của bạn để truy cập dịch vụ bảo hiểm, quản lý hợp đồng và xử lý yêu cầu bồi thường một cách an toàn.
+              Link your blockchain wallet to securely access insurance services, manage contracts, and process claims.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Phần kết nối ví */}
+      {/* Wallet connection section */}
       <section className="py-12 px-4">
         <div className="container mx-auto max-w-4xl">
           <Card className="border border-primary/20 shadow-lg shadow-primary/5 backdrop-blur-sm overflow-hidden">
             <CardHeader className="border-b border-border/50 bg-card/50">
               <CardTitle className="flex items-center gap-2">
                 <WalletIcon className="h-5 w-5 text-primary" />
-                Chọn một ví
+                Choose a wallet
               </CardTitle>
               <CardDescription>
-                Kết nối với một trong các nhà cung cấp ví có sẵn hoặc tạo ví mới
+                Connect with one of the available wallet providers or create a new wallet
               </CardDescription>
             </CardHeader>
             
@@ -134,7 +134,7 @@ const ConnectWallet = () => {
                             <div className="flex items-center gap-2">
                               <h3 className="font-medium group-hover:text-primary transition-colors">{wallet.name}</h3>
                               {wallet.popular && (
-                                <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">Phổ biến</span>
+                                <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">Popular</span>
                               )}
                             </div>
                             <p className="text-sm text-foreground/70">{wallet.description}</p>
@@ -158,13 +158,13 @@ const ConnectWallet = () => {
                         <div className="w-16 h-16 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
                       </div>
                       <h3 className="text-xl font-medium mb-2">
-                        Đang kết nối với {walletOptions.find(w => w.id === connectingWallet)?.name}
+                        Connecting to {walletOptions.find(w => w.id === connectingWallet)?.name}
                       </h3>
                       <p className="text-foreground/70 mb-4">
-                        Vui lòng kiểm tra ví của bạn và xác nhận yêu cầu kết nối
+                        Please check your wallet and confirm the connection request
                       </p>
                       <Button variant="outline" onClick={resetConnection}>
-                        Hủy
+                        Cancel
                       </Button>
                     </motion.div>
                   )}
@@ -182,17 +182,17 @@ const ConnectWallet = () => {
                         </div>
                       </div>
                       <h3 className="text-xl font-medium mb-2 text-green-500">
-                        Ví đã kết nối thành công
+                        Wallet connected successfully
                       </h3>
                       <p className="text-foreground/70 mb-6">
-                        Ví {walletOptions.find(w => w.id === connectingWallet)?.name} của bạn đã được kết nối. Bạn có thể truy cập tất cả các tính năng.
+                        Your {walletOptions.find(w => w.id === connectingWallet)?.name} wallet has been connected. You can access all features.
                       </p>
                       <div className="flex justify-center gap-4">
                         <Button variant="outline" onClick={resetConnection}>
-                          Ngắt kết nối
+                          Disconnect
                         </Button>
                         <GlowButton>
-                          Tiếp tục <ArrowRightIcon className="ml-1 h-4 w-4" />
+                          Continue <ArrowRightIcon className="ml-1 h-4 w-4" />
                         </GlowButton>
                       </div>
                     </motion.div>
@@ -211,17 +211,17 @@ const ConnectWallet = () => {
                         </div>
                       </div>
                       <h3 className="text-xl font-medium mb-2 text-destructive">
-                        Kết nối thất bại
+                        Connection failed
                       </h3>
                       <p className="text-foreground/70 mb-6">
                         {errorMessage}
                       </p>
                       <div className="flex justify-center gap-4">
                         <Button variant="outline" onClick={resetConnection}>
-                          Thử ví khác
+                          Try another wallet
                         </Button>
                         <Button onClick={() => handleConnectWallet(connectingWallet || '')}>
-                          Thử lại
+                          Try again
                         </Button>
                       </div>
                     </motion.div>
@@ -233,7 +233,7 @@ const ConnectWallet = () => {
         </div>
       </section>
 
-      {/* Phần thông tin bảo mật */}
+      {/* Security information section */}
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-4xl">
           <motion.div 
@@ -244,10 +244,10 @@ const ConnectWallet = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
-              Bảo mật của bạn là ưu tiên của chúng tôi
+              Your security is our priority
             </h2>
             <p className="text-lg text-foreground/70">
-              Chúng tôi áp dụng các tiêu chuẩn bảo mật cao nhất để bảo vệ kết nối ví của bạn
+              We apply the highest security standards to protect your wallet connection
             </p>
           </motion.div>
           
@@ -262,8 +262,8 @@ const ConnectWallet = () => {
               <div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center mb-4">
                 <ShieldIcon className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Không lưu trữ</h3>
-              <p className="text-foreground/70">Chúng tôi không bao giờ lưu trữ khóa riêng tư của bạn. Tài sản của bạn luôn nằm trong sự kiểm soát của bạn.</p>
+              <h3 className="text-xl font-semibold mb-2">No Storage</h3>
+              <p className="text-foreground/70">We never store your private keys. Your assets always remain under your control.</p>
             </motion.div>
             
             <motion.div 
@@ -276,8 +276,8 @@ const ConnectWallet = () => {
               <div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center mb-4">
                 <LockIcon className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Kết nối mã hóa</h3>
-              <p className="text-foreground/70">Tất cả các kết nối ví đều được bảo mật với mã hóa đầu cuối để bảo vệ dữ liệu của bạn.</p>
+              <h3 className="text-xl font-semibold mb-2">Encrypted Connection</h3>
+              <p className="text-foreground/70">All wallet connections are secured with end-to-end encryption to protect your data.</p>
             </motion.div>
             
             <motion.div 
@@ -290,14 +290,14 @@ const ConnectWallet = () => {
               <div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center mb-4">
                 <AlertCircleIcon className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Quyền hạn giới hạn</h3>
-              <p className="text-foreground/70">Chúng tôi chỉ yêu cầu các quyền tối thiểu cần thiết để cung cấp dịch vụ bảo hiểm của mình.</p>
+              <h3 className="text-xl font-semibold mb-2">Limited Permissions</h3>
+              <p className="text-foreground/70">We only request the minimum permissions necessary to provide our insurance services.</p>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Phần trợ giúp */}
+      {/* Help section */}
       <section className="py-12 px-4 bg-card/30">
         <div className="container mx-auto max-w-4xl">
           <motion.div 
@@ -308,13 +308,13 @@ const ConnectWallet = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-2xl font-bold mb-4">
-              Cần trợ giúp kết nối ví của bạn?
+              Need help connecting your wallet?
             </h2>
             <p className="text-foreground/70 mb-6 max-w-2xl mx-auto">
-              Đội ngũ hỗ trợ của chúng tôi luôn sẵn sàng 24/7 để hỗ trợ bạn với bất kỳ vấn đề kết nối ví nào.
+              Our support team is available 24/7 to assist you with any wallet connection issues.
             </p>
             <Button variant="outline" className="bg-card/50">
-              Liên hệ hỗ trợ
+              Contact Support
             </Button>
           </motion.div>
         </div>

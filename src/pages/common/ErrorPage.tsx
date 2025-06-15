@@ -13,17 +13,17 @@ const ErrorPage = () => {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden flex flex-col items-center justify-center px-4">
-      {/* Nền hạt blockchain */}
+      {/* Blockchain particles background */}
       <BlockchainParticles count={60} />
       
-      {/* Nền gradient hoạt ảnh */}
+      {/* Animated gradient background */}
       <div className="absolute inset-0 overflow-hidden z-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full filter blur-3xl opacity-30 animate-blob"></div>
         <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
         <div className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-purple-500/10 rounded-full filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
       </div>
 
-      {/* Khối 3D Blockchain */}
+      {/* 3D Blockchain Cube */}
       <div className="absolute top-1/4 left-1/5">
         <BlockchainCube 
           size={80} 
@@ -77,7 +77,7 @@ const ErrorPage = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.5 }}
         >
-          Không tìm thấy trang
+          Page Not Found
         </motion.h2>
         
         <motion.p 
@@ -86,7 +86,7 @@ const ErrorPage = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
         >
-          Trang bạn đang tìm kiếm không tồn tại hoặc đã bị xóa. Có thể đã xảy ra lỗi trong quá trình xử lý giao dịch blockchain.
+          The page you are looking for does not exist or has been removed. An error may have occurred during blockchain transaction processing.
         </motion.p>
         
         <motion.div
@@ -101,12 +101,12 @@ const ErrorPage = () => {
             size="lg"
           >
             <HomeIcon className="w-5 h-5 mr-2" />
-            <span>Trở về Trang chủ</span>
+            <span>Return to Home</span>
           </GlowButton>
         </motion.div>
       </motion.div>
 
-      {/* Luồng dữ liệu kỹ thuật số */}
+      {/* Digital data flow */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {Array.from({ length: 5 }).map((_, index) => (
           <motion.div 

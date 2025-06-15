@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { GlowButton } from "@/components/ui/glow-button";
 import { motion } from "framer-motion";
-import { CloudRain, Sun, Sprout, Droplets, Leaf } from "lucide-react";
+import { CloudRain, Sun, Sprout, Droplets, Leaf, ArrowRightIcon } from "lucide-react";
 import BlockchainParticles from "@/components/ui/blockchain-particles";
 import BlockchainCube from "@/components/ui/blockchain-cube";
 
@@ -266,19 +266,22 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-4xl  md:text-6xl font-bold mb-6 bg-gradient-to-r from-green-400 via-cyan-400 to-emerald-400 dark:from-green-300 dark:via-cyan-300 dark:to-emerald-300 bg-clip-text text-transparent">
-            Bảo Hiểm Nông Nghiệp Phi Tập Trung
-          </h1>
-          <p className="text-xl text-foreground/80 mb-8 relative z-10 backdrop-blur-sm p-4 rounded-xl border border-green-300/30 dark:border-green-500/30 bg-card/30 max-w-2xl mx-auto">
-            Bảo vệ mùa màng của bạn với giải pháp bảo hiểm thông minh dựa trên dữ liệu thời tiết và công nghệ blockchain
-          </p>
+<h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+  <span className="bg-gradient-to-r from-green-400 to-cyan-300 dark:from-green-300 dark:to-cyan-200 bg-clip-text text-transparent">
+    Decentralized Agricultural Insurance
+  </span>
+</h1>
+<p className="text-xl md:text-2xl text-foreground/70 mb-8 max-w-3xl">
+  Protect your crops with a smart insurance solution based on weather data and blockchain technology
+</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <GlowButton size="lg" glowColor="rgba(var(--primary-rgb), 0.4)">
-              Khám Phá Gói Bảo Hiểm
-            </GlowButton>
-            <Button size="lg" variant="outline" className="border-green-300/30 dark:border-green-500/30 hover:border-green-400/50 dark:hover:border-green-400/50">
-              Tìm Hiểu Thêm
-            </Button>
+          <GlowButton size="lg" className="mr-4" glowColor="rgba(var(--primary-rgb), 0.4)">
+  Explore Insurance Plans
+</GlowButton>
+<Button variant="outline" size="lg" className="flex items-center gap-2">
+  Learn More
+  <ArrowRightIcon className="h-4 w-4" />
+</Button>
           </div>
         </motion.div>
       </div>

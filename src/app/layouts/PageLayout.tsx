@@ -15,13 +15,13 @@ const PageLayout = () => {
   const location = useLocation();
   const { ROOT, INSURANCE_PLANS, CONNECT_WALLET, MY_INSURANCE } = routesPaths;
 
-  // Đóng menu di động khi đường dẫn thay đổi
+  // Close mobile menu when path changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
     setIsDropdownOpen(false);
   }, [location.pathname]);
 
-  // Thêm trình lắng nghe sự kiện cuộn
+  // Add scroll event listener
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -32,14 +32,14 @@ const PageLayout = () => {
   }, []);
 
   const navItems = [
-    { path: ROOT, label: 'Trang chủ', icon: <HomeIcon className="h-4 w-4" /> },
-    { path: INSURANCE_PLANS, label: 'Gói bảo hiểm', icon: <ShieldIcon className="h-4 w-4" /> },
-    { path: MY_INSURANCE, label: 'Bảo hiểm của tôi', icon: <LayoutDashboardIcon className="h-4 w-4" /> },
+    { path: ROOT, label: 'Home', icon: <HomeIcon className="h-4 w-4" /> },
+    { path: INSURANCE_PLANS, label: 'Insurance Plans', icon: <ShieldIcon className="h-4 w-4" /> },
+    { path: MY_INSURANCE, label: 'My Insurance', icon: <LayoutDashboardIcon className="h-4 w-4" /> },
   ];
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      {/* Thanh điều hướng */}
+      {/* Navigation bar */}
       <header 
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
@@ -48,7 +48,7 @@ const PageLayout = () => {
             "bg-transparent"
         )}
       >
-        {/* Viền gradient ở dưới cùng */}
+        {/* Gradient border at the bottom */}
         <div className={cn(
           "absolute bottom-0 left-0 right-0 h-[1px] transition-opacity duration-300",
           isScrolled ? "opacity-100" : "opacity-0"
@@ -66,7 +66,7 @@ const PageLayout = () => {
                 transition={{ duration: 0.5 }}
                 className="relative"
               >
-                {/* Hiệu ứng phát sáng logo */}
+                {/* Logo glow effect */}
                 <div className="absolute -inset-1 bg-primary/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 
                 <h1 className="text-xl font-bold bg-gradient-to-r from-primary via-cyan-400 to-purple-500 bg-clip-text text-transparent relative z-10">
@@ -75,7 +75,7 @@ const PageLayout = () => {
               </motion.div>
             </Link>
 
-            {/* Điều hướng cho máy tính để bàn */}
+            {/* Desktop navigation */}
             <nav className="hidden md:flex items-center space-x-1">
               {navItems.map((item) => (
                 <NavLink 
@@ -88,7 +88,7 @@ const PageLayout = () => {
                       : "text-foreground/70 hover:text-primary hover:bg-primary/5"
                   )}
                 >
-                  {/* Hiệu ứng phát sáng khi di chuột */}
+                  {/* Hover glow effect */}
                   <span className="absolute inset-0 rounded-md bg-primary/0 group-hover:bg-primary/5 transition-colors duration-300"></span>
                   
                   {item.icon}
@@ -105,22 +105,22 @@ const PageLayout = () => {
               >
                 <GlowButton size="sm" className="flex items-center gap-1.5">
                   <WalletIcon className="h-4 w-4" />
-                  Kết nối ví
+                  Connect Wallet
                 </GlowButton>
               </NavLink>
             </nav>
 
-            {/* Nút menu cho thiết bị di động */}
+            {/* Mobile menu button */}
             <div className="md:hidden flex items-center gap-2">
               <ThemeToggle />
               <Button 
                 variant="ghost" 
                 size="icon" 
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                aria-label="Chuyển đổi menu"
+                aria-label="Toggle menu"
                 className="relative overflow-hidden group"
               >
-                {/* Hiệu ứng khi di chuột qua nút */}
+                {/* Button hover effect */}
                 <span className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-300 rounded-full"></span>
                 
                 {isMobileMenuOpen ? (
@@ -133,7 +133,7 @@ const PageLayout = () => {
           </div>
         </div>
 
-        {/* Điều hướng cho thiết bị di động */}
+        {/* Mobile navigation */}
         {isMobileMenuOpen && (
           <motion.div 
             className="md:hidden bg-card/95 backdrop-blur-lg border-b border-primary/10"
@@ -174,7 +174,7 @@ const PageLayout = () => {
                   className="block px-3 py-2 rounded-md text-sm font-medium flex items-center gap-1.5 bg-gradient-to-r from-primary/20 to-cyan-500/20 text-primary mt-2"
                 >
                   <WalletIcon className="h-4 w-4" />
-                  Kết nối ví
+                  Connect Wallet
                 </NavLink>
               </motion.div>
             </div>
@@ -182,7 +182,7 @@ const PageLayout = () => {
         )}
       </header>
 
-      {/* Nội dung chính */}
+      {/* Main content */}
       <main 
         className={cn(
           "flex-1 overflow-y-auto pb-4 transition-all duration-300 mt-16",

@@ -9,22 +9,22 @@ const Footer = () => {
               BlockInsure
               </h3>
               <p className="text-foreground/70 mb-4 max-w-md">
-                Cách mạng hóa ngành bảo hiểm nông nghiệp với công nghệ blockchain, cung cấp giải pháp bảo hiểm minh bạch, an toàn và hiệu quả cho nông dân Việt Nam.
+                Revolutionizing the agricultural insurance industry with blockchain technology, providing transparent, secure, and efficient insurance solutions for Vietnamese farmers.
               </p>
             </div>
             
             <div>
-              <h4 className="font-semibold mb-4 text-foreground">Liên Kết Nhanh</h4>
+              <h4 className="font-semibold mb-4 text-foreground">Quick Links</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="text-foreground/70 hover:text-green-400 dark:hover:text-green-300 transition-colors">Giới Thiệu</a></li>
-                <li><a href="#" className="text-foreground/70 hover:text-green-400 dark:hover:text-green-300 transition-colors">Sản Phẩm Bảo Hiểm</a></li>
+                <li><a href="#" className="text-foreground/70 hover:text-green-400 dark:hover:text-green-300 transition-colors">About Us</a></li>
+                <li><a href="#" className="text-foreground/70 hover:text-green-400 dark:hover:text-green-300 transition-colors">Insurance Products</a></li>
                 <li><a href="#" className="text-foreground/70 hover:text-green-400 dark:hover:text-green-300 transition-colors">Whitepaper</a></li>
-                <li><a href="#" className="text-foreground/70 hover:text-green-400 dark:hover:text-green-300 transition-colors">Liên Hệ</a></li>
+                <li><a href="#" className="text-foreground/70 hover:text-green-400 dark:hover:text-green-300 transition-colors">Contact</a></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-semibold mb-4 text-foreground">Kết Nối</h4>
+              <h4 className="font-semibold mb-4 text-foreground">Connect</h4>
               <ul className="space-y-2">
                 <li><a href="#" className="text-foreground/70 hover:text-green-400 dark:hover:text-green-300 transition-colors">Twitter</a></li>
                 <li><a href="#" className="text-foreground/70 hover:text-green-400 dark:hover:text-green-300 transition-colors">Facebook</a></li>
@@ -35,7 +35,7 @@ const Footer = () => {
           </div>
           
           <div className="mt-12 pt-8 border-t border-green-300/20 dark:border-green-500/20 text-center text-foreground/50 text-sm">
-            <p>© {new Date().getFullYear()} . Bảo vệ mùa màng, bảo vệ tương lai.</p>
+            <p>© {new Date().getFullYear()} . Protecting crops, protecting the future.</p>
           </div>
         </div>
       </footer>

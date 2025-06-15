@@ -23,14 +23,14 @@ const CallToAction = () => {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
               <div>
                 <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-green-400 via-cyan-300 to-emerald-400 dark:from-green-300 dark:via-cyan-200 dark:to-emerald-300 bg-clip-text text-transparent">
-                  Sẵn Sàng Bảo Vệ Mùa Màng Của Bạn?
+                  Ready to Protect Your Crops?
                 </h2>
                 <p className="text-xl text-foreground/70 max-w-2xl">
-                  Tham gia cùng hàng nghìn nông dân tại Đồng bằng Sông Cửu Long đang tin tưởng giải pháp bảo hiểm nông nghiệp của chúng tôi.
+                  Join thousands of farmers in the Mekong Delta who trust our agricultural insurance solution.
                 </p>
               </div>
               <GlowButton size="lg" className="whitespace-nowrap" glowColor="rgba(var(--primary-rgb), 0.4)">
-                Đăng Ký Ngay
+                Register Now
               </GlowButton>
             </div>
           </motion.div>

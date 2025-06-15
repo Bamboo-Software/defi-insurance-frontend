@@ -7,26 +7,26 @@ import { Button } from "@/components/ui/button";
 const Features = () => {
     const features = [
       {
-        title: "Bảo Hiểm Tham Số",
-        description: "Tự động chi trả dựa trên dữ liệu thời tiết từ Chainlink Data Streams khi có mưa vượt ngưỡng hoặc hạn hán.",
+        title: "Comprehensive Insurance Solution",
+        description: " Our platform combines blockchain technology with parametric insurance to provide farmers with transparent and efficient protection",
         icon: <CloudRainIcon className="h-10 w-10 text-white" />,
         color: "from-green-400 to-cyan-400 dark:from-green-500 dark:to-cyan-500"
       },
       {
-        title: "Tích Hợp DeFi",
-        description: "Thanh toán phí bảo hiểm bằng USDC và nhận NFT cho hợp đồng bảo hiểm với quy trình đơn giản.",
+        title: "DeFi Integration",
+        description: "Pay insurance premiums in USDC and receive NFTs for insurance contracts with a simple process.",
         icon: <WalletIcon className="h-10 w-10 text-white" />,
         color: "from-cyan-400 to-blue-400 dark:from-cyan-500 dark:to-blue-500"
       },
       {
-        title: "Bể Thanh Khoản",
-        description: "Quản lý bể thanh khoản tích hợp với Aave để tạo lợi nhuận cho nhà đầu tư với APY hấp dẫn.",
+        title: "Liquidity Pool",
+        description: "Manage integrated liquidity pools with Aave to generate returns for investors with attractive APY.",
         icon: <DropletIcon className="h-10 w-10 text-white" />,
         color: "from-blue-400 to-emerald-400 dark:from-blue-500 dark:to-emerald-500"
       },
       {
-        title: "Minh Bạch & Phân Tích",
-        description: "Hiển thị dữ liệu công khai về bể thanh khoản, chi trả và lợi nhuận DeFi một cách minh bạch.",
+        title: "Transparency & Analytics",
+        description: "Display public data on liquidity pools, payouts, and DeFi returns transparently.",
         icon: <BarChart3Icon className="h-10 w-10 text-white" />,
         color: "from-emerald-400 to-green-400 dark:from-emerald-500 dark:to-green-500"
       },
@@ -46,10 +46,10 @@ const Features = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-green-400 to-cyan-300 dark:from-green-300 dark:to-cyan-200 bg-clip-text text-transparent">
-              Giải Pháp Bảo Hiểm Toàn Diện
+              Comprehensive Insurance Solution
             </h2>
             <p className="text-xl text-foreground/70">
-              Bảo vệ mùa màng của bạn với các sản phẩm bảo hiểm nông nghiệp dựa trên công nghệ blockchain
+              Protect your crops with blockchain-based agricultural insurance products
             </p>
           </motion.div>
   
@@ -75,7 +75,7 @@ const Features = () => {
                   </CardContent>
                   <CardFooter>
                     <Button variant="ghost" className="p-0 h-auto text-green-400 dark:text-green-300 hover:text-green-400/80 dark:hover:text-green-300/80 hover:bg-transparent">
-                      Tìm hiểu thêm <ArrowRightIcon className="ml-2 h-4 w-4" />
+                      Learn More <ArrowRightIcon className="ml-2 h-4 w-4" />
                     </Button>
                   </CardFooter>
                 </Card>

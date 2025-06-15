@@ -21,66 +21,66 @@ const MyInsurance = () => {
   const [activeTab, setActiveTab] = useState<'all' | 'active' | 'expired' | 'pending' | 'claimed'>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Dữ liệu mẫu các hợp đồng bảo hiểm
+  // Sample insurance policy data
   const insurancePolicies: InsurancePolicy[] = [
     {
       id: 'INS-001',
-      name: 'Bảo Vệ Hợp Đồng Thông Minh',
-      type: 'Bảo Hiểm Cơ Bản',
+      name: 'Smart Contract Protection',
+      type: 'Basic Insurance',
       status: 'active',
       coverageAmount: '5 ETH',
       premium: '0.05 ETH',
       startDate: '2023-10-15',
       endDate: '2024-10-15',
-      description: 'Bảo vệ chống lại các lỗ hổng và khai thác hợp đồng thông minh.',
+      description: 'Protection against smart contract vulnerabilities and exploits.',
     },
     {
       id: 'INS-002',
-      name: 'Bảo Hiểm Giao Thức DeFi',
-      type: 'Bảo Hiểm Cao Cấp',
+      name: 'DeFi Protocol Insurance',
+      type: 'Premium Insurance',
       status: 'active',
       coverageAmount: '20 ETH',
       premium: '0.15 ETH',
       startDate: '2023-11-01',
       endDate: '2024-02-01',
-      description: 'Bảo hiểm toàn diện cho việc tham gia giao thức DeFi và canh tác lợi nhuận.',
+      description: 'Comprehensive insurance for DeFi protocol participation and yield farming.',
     },
     {
       id: 'INS-003',
-      name: 'Bảo Vệ Hack Sàn Giao Dịch',
-      type: 'Bảo Hiểm Doanh Nghiệp',
+      name: 'Exchange Hack Protection',
+      type: 'Enterprise Insurance',
       status: 'expired',
       coverageAmount: '50 ETH',
       premium: '0.3 ETH',
       startDate: '2023-05-10',
       endDate: '2023-11-10',
-      description: 'Bảo vệ chống lại tổn thất do hack sàn giao dịch và vi phạm bảo mật.',
+      description: 'Protection against losses due to exchange hacks and security breaches.',
     },
     {
       id: 'INS-004',
-      name: 'Bảo Hiểm Bộ Sưu Tập NFT',
-      type: 'Bảo Hiểm Cao Cấp',
+      name: 'NFT Collection Insurance',
+      type: 'Premium Insurance',
       status: 'pending',
       coverageAmount: '15 ETH',
       premium: '0.12 ETH',
       startDate: 'Pending',
       endDate: 'Pending',
-      description: 'Bảo hiểm cho các bộ sưu tập NFT giá trị cao chống lại trộm cắp và vấn đề hợp đồng thông minh.',
+      description: 'Insurance for high-value NFT collections against theft and smart contract issues.',
     },
     {
       id: 'INS-005',
-      name: 'Bảo Hiểm Bảo Mật Ví',
-      type: 'Bảo Hiểm Cơ Bản',
+      name: 'Wallet Security Insurance',
+      type: 'Basic Insurance',
       status: 'claimed',
       coverageAmount: '3 ETH',
       premium: '0.03 ETH',
       startDate: '2023-08-15',
       endDate: '2024-08-15',
-      description: 'Bảo vệ chống lại hack ví và giao dịch trái phép.',
+      description: 'Protection against wallet hacks and unauthorized transactions.',
     },
   ];
 
-  // Lọc các hợp đồng bảo hiểm dựa trên tab đang hoạt động và truy vấn tìm kiếm
+  // Filter insurance policies based on active tab and search query
   const filteredPolicies = insurancePolicies
     .filter(policy => {
       if (activeTab === 'all') return true;
@@ -134,9 +134,9 @@ const MyInsurance = () => {
 
   // Định dạng ngày tháng để dễ đọc hơn
   const formatDate = (dateString: string) => {
-    if (dateString === 'Pending') return 'Đang chờ';
+    if (dateString === 'Pending') return 'Pending';
     const date = new Date(dateString);
-    return date.toLocaleDateString('vi-VN', { year: 'numeric', month: 'short', day: 'numeric' });
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
   };
 
   return (
@@ -162,15 +162,15 @@ const MyInsurance = () => {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
                 <h1 className="text-3xl md:text-4xl font-bold mb-2 bg-gradient-to-r from-primary via-cyan-400 to-purple-500 bg-clip-text text-transparent">
-                  Hợp Đồng Bảo Hiểm Của Tôi
+                  My Insurance Contracts
                 </h1>
                 <p className="text-lg text-foreground/70">
-                  Quản lý và theo dõi tất cả các hợp đồng bảo hiểm blockchain của bạn tại một nơi
+                  Manage and track all your blockchain insurance contracts in one place
                 </p>
               </div>
               <GlowButton className="flex items-center gap-1.5">
                 <PlusIcon className="h-4 w-4" />
-                Hợp Đồng Mới
+                New Contract
               </GlowButton>
             </div>
           </motion.div>
@@ -195,7 +195,7 @@ const MyInsurance = () => {
                       <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-foreground/50 h-4 w-4" />
                       <input
                         type="text"
-                        placeholder="Tìm kiếm hợp đồng theo tên hoặc ID..."
+                        placeholder="Search contracts by name or ID..."
                         className="w-full pl-10 pr-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
@@ -204,7 +204,7 @@ const MyInsurance = () => {
                   </div>
                   <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0">
                     <span className="text-sm text-foreground/70 flex items-center gap-1">
-                      <FilterIcon className="h-4 w-4" /> Lọc:
+                      <FilterIcon className="h-4 w-4" /> Filter:
                     </span>
                     <Button 
                       variant={activeTab === 'all' ? 'default' : 'outline'}
@@ -212,7 +212,7 @@ const MyInsurance = () => {
                       onClick={() => setActiveTab('all')}
                       className="whitespace-nowrap"
                     >
-                      Tất Cả
+                      All
                     </Button>
                     <Button 
                       variant={activeTab === 'active' ? 'default' : 'outline'}
@@ -220,7 +220,7 @@ const MyInsurance = () => {
                       onClick={() => setActiveTab('active')}
                       className="whitespace-nowrap"
                     >
-                      Đang Hoạt Động
+                      Active
                     </Button>
                     <Button 
                       variant={activeTab === 'pending' ? 'default' : 'outline'}
@@ -228,7 +228,7 @@ const MyInsurance = () => {
                       onClick={() => setActiveTab('pending')}
                       className="whitespace-nowrap"
                     >
-                      Đang Chờ
+                      Pending
                     </Button>
                     <Button 
                       variant={activeTab === 'claimed' ? 'default' : 'outline'}
@@ -236,7 +236,7 @@ const MyInsurance = () => {
                       onClick={() => setActiveTab('claimed')}
                       className="whitespace-nowrap"
                     >
-                      Đã Yêu Cầu
+                      Claimed
                     </Button>
                     <Button 
                       variant={activeTab === 'expired' ? 'default' : 'outline'}
@@ -244,7 +244,7 @@ const MyInsurance = () => {
                       onClick={() => setActiveTab('expired')}
                       className="whitespace-nowrap"
                     >
-                      Đã Hết Hạn
+                      Expired
                     </Button>
                   </div>
                 </div>
@@ -289,10 +289,10 @@ const MyInsurance = () => {
                                   <div className={`flex items-center gap-1.5 ${color} text-sm font-medium px-3 py-1 rounded-full ${bgColor}`}>
                                     {icon}
                                     <span className="capitalize">
-                                      {policy.status === 'active' && 'Đang hoạt động'}
-                                      {policy.status === 'expired' && 'Đã hết hạn'}
-                                      {policy.status === 'pending' && 'Đang chờ'}
-                                      {policy.status === 'claimed' && 'Đã yêu cầu'}
+                                      {policy.status === 'active' && 'Active'}
+                                      {policy.status === 'expired' && 'Expired'}
+                                      {policy.status === 'pending' && 'Pending'}
+                                      {policy.status === 'claimed' && 'Claimed'}
                                     </span>
                                   </div>
                                 </div>
@@ -303,19 +303,19 @@ const MyInsurance = () => {
                                 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                                   <div>
-                                    <div className="text-foreground/50 mb-1">Số Tiền Bảo Hiểm</div>
+                                    <div className="text-foreground/50 mb-1">Coverage Amount</div>
                                     <div className="font-medium">{policy.coverageAmount}</div>
                                   </div>
                                   <div>
-                                    <div className="text-foreground/50 mb-1">Phí Bảo Hiểm</div>
+                                    <div className="text-foreground/50 mb-1">Premium</div>
                                     <div className="font-medium">{policy.premium}</div>
                                   </div>
                                   <div>
-                                    <div className="text-foreground/50 mb-1">Ngày Bắt Đầu</div>
+                                    <div className="text-foreground/50 mb-1">Start Date</div>
                                     <div className="font-medium">{formatDate(policy.startDate)}</div>
                                   </div>
                                   <div>
-                                    <div className="text-foreground/50 mb-1">Ngày Kết Thúc</div>
+                                    <div className="text-foreground/50 mb-1">End Date</div>
                                     <div className="font-medium">{formatDate(policy.endDate)}</div>
                                   </div>
                                 </div>
@@ -328,27 +328,27 @@ const MyInsurance = () => {
                             <div className="space-y-3">
                               <Button variant="outline" className="w-full justify-start">
                                 <FileTextIcon className="mr-2 h-4 w-4" />
-                                Xem Chi Tiết
+                                View Details
                               </Button>
                               
                               {policy.status === 'active' && (
                                 <Button variant="outline" className="w-full justify-start">
                                   <AlertCircleIcon className="mr-2 h-4 w-4" />
-                                  Yêu Cầu Bồi Thường
+                                  File Claim
                                 </Button>
                               )}
                               
                               {policy.status === 'expired' && (
                                 <GlowButton className="w-full justify-start">
                                   <PlusIcon className="mr-2 h-4 w-4" />
-                                  Gia Hạn Hợp Đồng
+                                  Renew Contract
                                 </GlowButton>
                               )}
                               
                               {policy.status === 'pending' && (
                                 <Button variant="outline" className="w-full justify-start">
                                   <ClockIcon className="mr-2 h-4 w-4" />
-                                  Kiểm Tra Trạng Thái
+                                  Check Status
                                 </Button>
                               )}
                             </div>
@@ -369,15 +369,15 @@ const MyInsurance = () => {
                 <div className="bg-card/50 inline-flex rounded-full p-4 mb-4">
                   <ShieldIcon className="h-8 w-8 text-foreground/30" />
                 </div>
-                <h3 className="text-xl font-medium mb-2">Không tìm thấy hợp đồng nào</h3>
+                <h3 className="text-xl font-medium mb-2">No contracts found</h3>
                 <p className="text-foreground/70 mb-6">
                   {searchQuery 
-                    ? "Không có hợp đồng nào phù hợp với tiêu chí tìm kiếm của bạn. Hãy thử điều chỉnh bộ lọc."
-                    : "Bạn chưa có hợp đồng bảo hiểm nào."}
+                    ? "No contracts match your search criteria. Try adjusting your filters."
+                    : "You don't have any insurance contracts yet."}
                 </p>
                 <GlowButton>
                   <PlusIcon className="mr-2 h-4 w-4" />
-                  Đăng Ký Hợp Đồng Đầu Tiên
+                  Register Your First Contract
                 </GlowButton>
               </motion.div>
             )}
@@ -396,10 +396,10 @@ const MyInsurance = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
-              Thống Kê Bảo Hiểm
+              Insurance Statistics
             </h2>
             <p className="text-lg text-foreground/70">
-              Tổng quan về danh mục bảo hiểm và lịch sử yêu cầu bồi thường của bạn
+              Overview of your insurance portfolio and claim history
             </p>
           </motion.div>
           
@@ -414,7 +414,7 @@ const MyInsurance = () => {
               <div className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
                 {insurancePolicies.filter(p => p.status === 'active').length}
               </div>
-              <div className="text-foreground/70">Hợp Đồng Đang Hoạt Động</div>
+              <div className="text-foreground/70">Active Contracts</div>
             </motion.div>
             
             <motion.div 
@@ -427,7 +427,7 @@ const MyInsurance = () => {
               <div className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
                 28 ETH
               </div>
-              <div className="text-foreground/70">Tổng Bảo Hiểm</div>
+              <div className="text-foreground/70">Total Coverage</div>
             </motion.div>
             
             <motion.div 
@@ -440,7 +440,7 @@ const MyInsurance = () => {
               <div className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
                 1
               </div>
-              <div className="text-foreground/70">Yêu Cầu Đã Nộp</div>
+              <div className="text-foreground/70">Claims Submitted</div>
             </motion.div>
             
             <motion.div 
@@ -453,7 +453,7 @@ const MyInsurance = () => {
               <div className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
                 3 ETH
               </div>
-              <div className="text-foreground/70">Bồi Thường Đã Trả</div>
+              <div className="text-foreground/70">Claims Paid</div>
             </motion.div>
           </div>
         </div>
@@ -472,14 +472,14 @@ const MyInsurance = () => {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
               <div>
                 <h2 className="text-2xl font-bold mb-2 bg-gradient-to-r from-primary via-cyan-400 to-purple-500 bg-clip-text text-transparent">
-                  Cần Thêm Bảo Hiểm?
+                  Need More Insurance?
                 </h2>
                 <p className="text-foreground/70 max-w-xl">
-                  Khám phá các gói bảo hiểm của chúng tôi để tìm bảo hiểm hoàn hảo cho tài sản số của bạn.
+                  Explore our insurance packages to find the perfect coverage for your digital assets.
                 </p>
               </div>
               <GlowButton size="lg" className="whitespace-nowrap">
-                Xem Các Gói
+                View Packages
               </GlowButton>
             </div>
           </motion.div>

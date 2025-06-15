@@ -6,17 +6,17 @@ import BlockchainCube from '@/components/ui/blockchain-cube'
 const LoadingPage = () => {
   return (
     <div className='min-h-screen bg-background relative overflow-hidden flex flex-col justify-center items-center'>
-      {/* Nền hạt blockchain */}
+      {/* Blockchain particles background */}
       <BlockchainParticles count={60} />
       
-      {/* Nền gradient hoạt ảnh */}
+      {/* Animated gradient background */}
       <div className="absolute inset-0 overflow-hidden z-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full filter blur-3xl opacity-30 animate-blob"></div>
         <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
         <div className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-purple-500/10 rounded-full filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
       </div>
 
-      {/* Khối 3D Blockchain */}
+      {/* 3D Blockchain Cube */}
       <div className="absolute top-1/4 left-1/5">
         <BlockchainCube 
           size={60} 
@@ -35,7 +35,7 @@ const LoadingPage = () => {
         />
       </div>
 
-      {/* Nội dung đang tải */}
+      {/* Loading content */}
       <motion.div 
         className="relative z-10 backdrop-blur-sm p-8 rounded-xl border border-primary/20 bg-card/30 flex flex-col items-center"
         initial={{ opacity: 0, scale: 0.9 }}
@@ -65,7 +65,7 @@ const LoadingPage = () => {
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          {/* <span className="bg-gradient-to-r from-primary via-cyan-400 to-purple-500 bg-clip-text text-transparent">Đang tải</span> */}
+          {/* <span className="bg-gradient-to-r from-primary via-cyan-400 to-purple-500 bg-clip-text text-transparent">Loading</span> */}
           <motion.span
             animate={{ opacity: [0, 1, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 0.2 }}
@@ -86,11 +86,11 @@ const LoadingPage = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 0.5 }}
         >
-          Đang xử lý giao dịch blockchain, vui lòng đợi trong giây lát
+          Processing blockchain transaction, please wait a moment
         </motion.p> */}
       </motion.div>
 
-      {/* Luồng dữ liệu kỹ thuật số */}
+      {/* Digital data flow */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {Array.from({ length: 3 }).map((_, index) => (
           <motion.div 

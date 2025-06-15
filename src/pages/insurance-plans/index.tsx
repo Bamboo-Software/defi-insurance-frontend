@@ -22,54 +22,54 @@ const InsurancePlans = () => {
   const insurancePlans: InsurancePlan[] = [
     {
       id: 'basic-coverage',
-      name: 'Bảo Hiểm Cơ Bản',
+      name: 'Basic Insurance',
       price: 0.05,
-      description: 'Bảo vệ thiết yếu cho cá nhân mới bắt đầu hành trình tiền điện tử',
+      description: 'Essential protection for individuals new to cryptocurrency',
       features: [
-        'Bảo hiểm lên đến 5 ETH',
-        'Bảo vệ khỏi lỗ hổng hợp đồng thông minh',
-        'Thời hạn bảo hiểm 30 ngày',
-        'Hỗ trợ khách hàng cơ bản',
+        'Insurance up to 5 ETH',
+        'Protection against smart contract vulnerabilities',
+        '30-day insurance period',
+        'Basic customer support',
       ],
       coverageAmount: '5 ETH',
-      duration: '30 ngày',
+      duration: '30 days',
       category: 'basic',
     },
     {
       id: 'premium-coverage',
-      name: 'Bảo Hiểm Cao Cấp',
+      name: 'Premium Insurance',
       price: 0.15,
-      description: 'Bảo vệ nâng cao với các lợi ích bổ sung cho các nhà giao dịch tích cực',
+      description: 'Enhanced protection with additional benefits for active traders',
       features: [
-        'Bảo hiểm lên đến 20 ETH',
-        'Bảo vệ khỏi lỗ hổng hợp đồng thông minh',
-        'Bảo hiểm giao thức DeFi',
-        'Thời hạn bảo hiểm 90 ngày',
-        'Hỗ trợ khách hàng ưu tiên',
-        'Hỗ trợ khôi phục ví',
+        'Insurance up to 20 ETH',
+        'Protection against smart contract vulnerabilities',
+        'DeFi protocol insurance',
+        '90-day insurance period',
+        'Priority customer support',
+        'Wallet recovery support',
       ],
       recommended: true,
       coverageAmount: '20 ETH',
-      duration: '90 ngày',
+      duration: '90 days',
       category: 'premium',
     },
     {
       id: 'enterprise-coverage',
-      name: 'Bảo Hiểm Doanh Nghiệp',
+      name: 'Enterprise Insurance',
       price: 0.5,
-      description: 'Bảo vệ toàn diện cho doanh nghiệp và các khoản đầu tư lớn',
+      description: 'Comprehensive protection for businesses and large investments',
       features: [
-        'Bảo hiểm lên đến 100 ETH',
-        'Bảo vệ khỏi lỗ hổng hợp đồng thông minh',
-        'Bảo hiểm giao thức DeFi',
-        'Bảo vệ khỏi hack sàn giao dịch',
-        'Thời hạn bảo hiểm 180 ngày',
-        'Hỗ trợ khách hàng 24/7',
-        'Xử lý yêu cầu bồi thường tùy chỉnh',
-        'Bảo vệ đa ví',
+        'Insurance up to 100 ETH',
+        'Protection against smart contract vulnerabilities',
+        'DeFi protocol insurance',
+        'Exchange hack protection',
+        '180-day insurance period',
+        '24/7 customer support',
+        'Custom claim processing',
+        'Multi-wallet protection',
       ],
       coverageAmount: '100 ETH',
-      duration: '180 ngày',
+      duration: '180 days',
       category: 'enterprise',
     },
   ];
@@ -99,10 +99,10 @@ const InsurancePlans = () => {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary via-cyan-400 to-purple-500 bg-clip-text text-transparent">
-              Chọn Gói Bảo Hiểm Của Bạn
+              Choose Your Insurance Plan
             </h1>
             <p className="text-xl text-foreground/70 mb-8">
-              Bảo vệ tài sản số của bạn với các gói bảo hiểm dựa trên blockchain, cung cấp bảo hiểm minh bạch và xử lý yêu cầu bồi thường tức thì.
+              Protect your digital assets with blockchain-based insurance packages, providing transparent coverage and instant claim processing.
             </p>
           </motion.div>
           
@@ -117,25 +117,25 @@ const InsurancePlans = () => {
               onClick={() => setSelectedCategory('all')}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedCategory === 'all' ? 'bg-primary text-primary-foreground' : 'bg-card/50 text-foreground/70 hover:bg-card/80'}`}
             >
-              Tất Cả Gói
+              All Plans
             </button>
             <button 
               onClick={() => setSelectedCategory('basic')}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedCategory === 'basic' ? 'bg-primary text-primary-foreground' : 'bg-card/50 text-foreground/70 hover:bg-card/80'}`}
             >
-              Cơ Bản
+              Basic
             </button>
             <button 
               onClick={() => setSelectedCategory('premium')}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedCategory === 'premium' ? 'bg-primary text-primary-foreground' : 'bg-card/50 text-foreground/70 hover:bg-card/80'}`}
             >
-              Cao Cấp
+              Premium
             </button>
             <button 
               onClick={() => setSelectedCategory('enterprise')}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedCategory === 'enterprise' ? 'bg-primary text-primary-foreground' : 'bg-card/50 text-foreground/70 hover:bg-card/80'}`}
             >
-              Doanh Nghiệp
+              Enterprise
             </button>
           </motion.div>
         </div>
@@ -155,7 +155,7 @@ const InsurancePlans = () => {
                 <Card className={`h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 ${plan.recommended ? 'border-primary/50 shadow-md shadow-primary/20' : 'border-border'}`}>
                   {plan.recommended && (
                     <div className="bg-gradient-to-r from-primary to-cyan-500 text-white text-xs font-medium px-3 py-1 text-center">
-                      KHUYẾN NGHỊ
+                      RECOMMENDED
                     </div>
                   )}
                   <CardHeader>
@@ -177,7 +177,7 @@ const InsurancePlans = () => {
                       </div>
                       <div className="text-sm text-foreground/70 flex items-center gap-1">
                         <InfoIcon className="h-3 w-3" />
-                        <span>Bảo hiểm lên đến {plan.coverageAmount} trong {plan.duration}</span>
+                        <span>Insurance up to {plan.coverageAmount} for {plan.duration}</span>
                       </div>
                     </div>
                     
@@ -192,7 +192,7 @@ const InsurancePlans = () => {
                     
                     <div className="mt-auto pt-4">
                       <GlowButton className="w-full justify-center" glowColor="rgba(0, 212, 255, 0.3)">
-                        Đăng Ký Ngay <ArrowRightIcon className="h-4 w-4 ml-1" />
+                        Sign Up Now <ArrowRightIcon className="h-4 w-4 ml-1" />
                       </GlowButton>
                     </div>
                   </CardContent>
@@ -214,10 +214,10 @@ const InsurancePlans = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
-              Tại Sao Chọn Bảo Hiểm Blockchain Của Chúng Tôi?
+              Why Choose Our Blockchain Insurance?
             </h2>
             <p className="text-lg text-foreground/70 max-w-3xl mx-auto">
-              Giải pháp bảo hiểm blockchain của chúng tôi mang đến sự bảo vệ toàn diện cho tài sản số của bạn với tính minh bạch và hiệu quả vượt trội
+              Our blockchain insurance solution provides comprehensive protection for your digital assets with superior transparency and efficiency
             </p>
           </motion.div>
           
@@ -232,8 +232,8 @@ const InsurancePlans = () => {
               <div className="bg-primary/10 p-3 rounded-full w-fit mb-4">
                 <ShieldIcon className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Bảo Vệ Toàn Diện</h3>
-              <p className="text-foreground/70">Bảo vệ tài sản số của bạn khỏi các lỗ hổng hợp đồng thông minh, hack và các rủi ro khác trong hệ sinh thái blockchain.</p>
+              <h3 className="text-xl font-semibold mb-2">Comprehensive Protection</h3>
+              <p className="text-foreground/70">Protect your digital assets from smart contract vulnerabilities, hacks, and other risks in the blockchain ecosystem.</p>
             </motion.div>
             
             <motion.div 
@@ -250,8 +250,8 @@ const InsurancePlans = () => {
                   <line x1="17.5" y1="15" x2="9" y2="15"></line>
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-2">Hợp Đồng Thông Minh</h3>
-              <p className="text-foreground/70">Tất cả các hợp đồng bảo hiểm được thực hiện thông qua hợp đồng thông minh, đảm bảo tính minh bạch và không thể thay đổi.</p>
+              <h3 className="text-xl font-semibold mb-2">Smart Contracts</h3>
+              <p className="text-foreground/70">All insurance contracts are executed through smart contracts, ensuring transparency and immutability.</p>
             </motion.div>
             
             <motion.div 
@@ -267,8 +267,8 @@ const InsurancePlans = () => {
                   <polyline points="12 6 12 12 16 14"></polyline>
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-2">Xử Lý Nhanh Chóng</h3>
-              <p className="text-foreground/70">Yêu cầu bồi thường được xử lý tự động và thanh toán được thực hiện ngay lập tức sau khi xác minh thành công.</p>
+              <h3 className="text-xl font-semibold mb-2">Fast Processing</h3>
+              <p className="text-foreground/70">Claims are processed automatically and payments are made immediately after successful verification.</p>
             </motion.div>
             
             <motion.div 
@@ -283,8 +283,8 @@ const InsurancePlans = () => {
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-2">An Toàn & Bảo Mật</h3>
-              <p className="text-foreground/70">Hệ thống bảo hiểm của chúng tôi được kiểm toán bởi các chuyên gia bảo mật hàng đầu, đảm bảo an toàn tối đa cho tài sản của bạn.</p>
+              <h3 className="text-xl font-semibold mb-2">Safety & Security</h3>
+              <p className="text-foreground/70">Our insurance system is audited by leading security experts, ensuring maximum safety for your assets.</p>
             </motion.div>
           </div>
         </div>
@@ -301,10 +301,10 @@ const InsurancePlans = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
-              Bảo Hiểm Blockchain Bằng Số
+              Blockchain Insurance by the Numbers
             </h2>
             <p className="text-lg text-foreground/70 max-w-3xl mx-auto">
-              Chúng tôi tự hào về những con số ấn tượng đã đạt được trong việc bảo vệ tài sản số của khách hàng
+              We are proud of the impressive numbers we have achieved in protecting our customers' digital assets
             </p>
           </motion.div>
           
@@ -319,7 +319,7 @@ const InsurancePlans = () => {
               <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
                 10K+
               </div>
-              <p className="text-foreground/70">Khách Hàng Tin Tưởng</p>
+              <p className="text-foreground/70">Trusted Customers</p>
             </motion.div>
             
             <motion.div 
@@ -332,7 +332,7 @@ const InsurancePlans = () => {
               <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
                 500 ETH
               </div>
-              <p className="text-foreground/70">Đã Bồi Thường</p>
+              <p className="text-foreground/70">Claims Paid</p>
             </motion.div>
             
             <motion.div 
@@ -345,7 +345,7 @@ const InsurancePlans = () => {
               <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
                 99.8%
               </div>
-              <p className="text-foreground/70">Tỷ Lệ Hài Lòng</p>
+              <p className="text-foreground/70">Satisfaction Rate</p>
             </motion.div>
             
             <motion.div 
@@ -358,7 +358,7 @@ const InsurancePlans = () => {
               <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
 "&lt; 24h"
               </div>
-              <p className="text-foreground/70">Thời Gian Xử Lý</p>
+              <p className="text-foreground/70">Processing Time</p>
             </motion.div>
           </div>
         </div>
@@ -375,10 +375,10 @@ const InsurancePlans = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
-              Câu Hỏi Thường Gặp
+              Frequently Asked Questions
             </h2>
             <p className="text-lg text-foreground/70">
-              Tất cả những điều bạn cần biết về các gói bảo hiểm blockchain của chúng tôi
+              Everything you need to know about our blockchain insurance packages
             </p>
           </motion.div>
           
@@ -390,8 +390,8 @@ const InsurancePlans = () => {
               transition={{ duration: 0.3, delay: 0.1 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-xl font-semibold mb-2">Bảo hiểm blockchain hoạt động như thế nào?</h3>
-              <p className="text-foreground/70">Các hợp đồng bảo hiểm của chúng tôi được mã hóa dưới dạng hợp đồng thông minh trên blockchain, tạo ra bản ghi bất biến về bảo hiểm của bạn. Khi có yêu cầu bồi thường, hợp đồng thông minh sẽ tự động xác minh các điều kiện và xử lý thanh toán mà không cần can thiệp thủ công.</p>
+              <h3 className="text-xl font-semibold mb-2">How does blockchain insurance work?</h3>
+              <p className="text-foreground/70">Our insurance contracts are encoded as smart contracts on the blockchain, creating an immutable record of your insurance. When a claim is made, the smart contract automatically verifies the conditions and processes the payment without manual intervention.</p>
             </motion.div>
             
             <motion.div 
@@ -401,8 +401,8 @@ const InsurancePlans = () => {
               transition={{ duration: 0.3, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-xl font-semibold mb-2">Những tài sản nào được bảo hiểm?</h3>
-              <p className="text-foreground/70">Các gói bảo hiểm của chúng tôi bao gồm nhiều loại tài sản số như tiền điện tử và token. Bảo hiểm bao gồm bảo vệ chống lại các lỗ hổng hợp đồng thông minh, hack sàn giao dịch và các rủi ro cụ thể khác tùy thuộc vào gói bạn chọn.</p>
+              <h3 className="text-xl font-semibold mb-2">What assets are insured?</h3>
+              <p className="text-foreground/70">Our insurance packages cover various digital assets such as cryptocurrencies and tokens. Coverage includes protection against smart contract vulnerabilities, exchange hacks, and other specific risks depending on the package you choose.</p>
             </motion.div>
             
             <motion.div 
@@ -412,8 +412,8 @@ const InsurancePlans = () => {
               transition={{ duration: 0.3, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-xl font-semibold mb-2">Làm thế nào để yêu cầu bồi thường?</h3>
-              <p className="text-foreground/70">Yêu cầu bồi thường được khởi tạo thông qua giao diện dApp của chúng tôi. Chỉ cần kết nối ví của bạn, chọn hợp đồng bảo hiểm và gửi chi tiết yêu cầu. Hợp đồng thông minh của chúng tôi sẽ tự động xác minh yêu cầu dựa trên dữ liệu blockchain và xử lý các yêu cầu hợp lệ ngay lập tức.</p>
+              <h3 className="text-xl font-semibold mb-2">How do I make a claim?</h3>
+              <p className="text-foreground/70">Claims are initiated through our dApp interface. Simply connect your wallet, select your insurance contract, and submit the claim details. Our smart contract will automatically verify the claim based on blockchain data and process valid claims immediately.</p>
             </motion.div>
             
             <motion.div 
@@ -423,8 +423,8 @@ const InsurancePlans = () => {
               transition={{ duration: 0.3, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-xl font-semibold mb-2">Tôi có thể nâng cấp gói bảo hiểm không?</h3>
-              <p className="text-foreground/70">Có, bạn có thể nâng cấp gói bảo hiểm bất cứ lúc nào. Phần bảo hiểm còn lại từ gói hiện tại của bạn sẽ được tính theo tỷ lệ và áp dụng cho gói mới, đảm bảo bạn không mất bất kỳ giá trị nào khi nâng cấp.</p>
+              <h3 className="text-xl font-semibold mb-2">Can I upgrade my insurance package?</h3>
+              <p className="text-foreground/70">Yes, you can upgrade your insurance package at any time. The remaining coverage from your current package will be prorated and applied to the new package, ensuring you don't lose any value when upgrading.</p>
             </motion.div>
           </div>
         </div>
@@ -441,10 +441,10 @@ const InsurancePlans = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
-              Khách Hàng Nói Gì Về Chúng Tôi
+              What Our Customers Say About Us
             </h2>
             <p className="text-lg text-foreground/70 max-w-3xl mx-auto">
-              Khám phá trải nghiệm của những khách hàng đã tin tưởng giải pháp bảo hiểm blockchain của chúng tôi
+              Discover the experiences of customers who have trusted our blockchain insurance solution
             </p>
           </motion.div>
           
@@ -463,14 +463,14 @@ const InsurancePlans = () => {
                 </svg>
               </div>
               <div className="pt-6">
-                <p className="text-foreground/70 mb-6 italic">"Sau khi bị hack sàn giao dịch, tôi đã mất một lượng ETH đáng kể. Nhờ có bảo hiểm blockchain, tôi đã được bồi thường đầy đủ chỉ trong vài giờ. Dịch vụ tuyệt vời!"</p>
+                <p className="text-foreground/70 mb-6 italic">"After experiencing an exchange hack, I lost a significant amount of ETH. Thanks to blockchain insurance, I was fully compensated within hours. Excellent service!"</p>
                 <div className="flex items-center gap-3">
                   <div className="bg-primary/20 h-10 w-10 rounded-full flex items-center justify-center">
                     <span className="text-primary font-medium">TN</span>
                   </div>
                   <div>
-                    <p className="font-semibold">Trần Nam</p>
-                    <p className="text-sm text-foreground/70">Nhà đầu tư cá nhân</p>
+                    <p className="font-semibold">Tran Nam</p>
+                    <p className="text-sm text-foreground/70">Individual Investor</p>
                   </div>
                 </div>
               </div>
@@ -490,13 +490,13 @@ const InsurancePlans = () => {
                 </svg>
               </div>
               <div className="pt-6">
-                <p className="text-foreground/70 mb-6 italic">"Là một doanh nghiệp hoạt động trong lĩnh vực DeFi, việc bảo vệ tài sản của khách hàng là ưu tiên hàng đầu. Gói bảo hiểm doanh nghiệp đã giúp chúng tôi xây dựng niềm tin với người dùng."</p>
+                <p className="text-foreground/70 mb-6 italic">"As a business operating in the DeFi space, protecting our customers' assets is a top priority. The enterprise insurance package has helped us build trust with our users."</p>
                 <div className="flex items-center gap-3">
                   <div className="bg-primary/20 h-10 w-10 rounded-full flex items-center justify-center">
                     <span className="text-primary font-medium">HL</span>
                   </div>
                   <div>
-                    <p className="font-semibold">Hoàng Linh</p>
+                    <p className="font-semibold">Hoang Linh</p>
                     <p className="text-sm text-foreground/70">CEO, DeFiSecure</p>
                   </div>
                 </div>
@@ -517,14 +517,14 @@ const InsurancePlans = () => {
                 </svg>
               </div>
               <div className="pt-6">
-                <p className="text-foreground/70 mb-6 italic">"Quy trình yêu cầu bồi thường đơn giản và minh bạch. Tôi đã nhận được bồi thường cho lỗ hổng hợp đồng thông minh chỉ trong vài phút sau khi gửi yêu cầu. Đây là dịch vụ không thể thiếu cho bất kỳ ai tham gia vào thị trường crypto."</p>
+                <p className="text-foreground/70 mb-6 italic">"The claim process is simple and transparent. I received compensation for a smart contract vulnerability within minutes of submitting my claim. This is an essential service for anyone involved in the crypto market."</p>
                 <div className="flex items-center gap-3">
                   <div className="bg-primary/20 h-10 w-10 rounded-full flex items-center justify-center">
                     <span className="text-primary font-medium">MT</span>
                   </div>
                   <div>
-                    <p className="font-semibold">Minh Tuấn</p>
-                    <p className="text-sm text-foreground/70">Nhà phát triển blockchain</p>
+                    <p className="font-semibold">Minh Tuan</p>
+                    <p className="text-sm text-foreground/70">Blockchain Developer</p>
                   </div>
                 </div>
               </div>
@@ -545,13 +545,13 @@ const InsurancePlans = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
-              Sẵn Sàng Bảo Vệ Tài Sản Số Của Bạn?
+              Ready to Protect Your Digital Assets?
             </h2>
             <p className="text-xl text-foreground/70 mb-8 max-w-2xl mx-auto">
-              Tham gia cùng hàng nghìn người dùng blockchain đang tin tưởng các gói bảo hiểm của chúng tôi để bảo vệ khoản đầu tư của họ khỏi những rủi ro không lường trước.
+              Join thousands of blockchain users who trust our insurance packages to protect their investments from unforeseen risks.
             </p>
             <GlowButton size="lg" className="px-8 py-6 text-lg">
-              Bắt Đầu Ngay Hôm Nay
+              Start Today
             </GlowButton>
           </motion.div>
         </div>
