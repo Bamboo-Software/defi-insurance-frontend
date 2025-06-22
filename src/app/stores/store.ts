@@ -1,7 +1,7 @@
 import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, useStore } from 'react-redux'
 import themeReducer, { namespace as themeNamespace } from './theme/theme.slice';
-
+import { insurancePackageApi, insuranceTransactionApi } from '../services/insurance';
 
 export const listenerMiddleware = createListenerMiddleware({
   onError: () => console.error('An error listener middleware occurred'),
@@ -10,13 +10,19 @@ export const listenerMiddleware = createListenerMiddleware({
 
 const reducer = {
   [themeNamespace]: themeReducer,
+
+  [insurancePackageApi.reducerPath]: insurancePackageApi.reducer,
+  [insuranceTransactionApi.reducerPath]: insuranceTransactionApi.reducer,
 };
 
 export const store = configureStore({
   reducer,
   middleware: (getDefaultMiddleware) => 
     getDefaultMiddleware()
-    .concat()
+    .concat(
+      insurancePackageApi.middleware,
+      insuranceTransactionApi.middleware,
+    )
     .prepend(listenerMiddleware.middleware)
 });
 

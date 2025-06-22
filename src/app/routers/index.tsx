@@ -12,13 +12,11 @@ import LoadingPage from '@/pages/common/LoadingPage';
 // Lazy load pages for better performance
 import { lazy, Suspense } from 'react';
 const InsurancePlans = lazy(() => import('@/pages/insurance-plans'));
-const ConnectWallet = lazy(() => import('@/pages/connect-wallet'));
 const MyInsurance = lazy(() => import('@/pages/my-insurance'));
 
 const {
   ROOT,
   INSURANCE_PLANS,
-  CONNECT_WALLET,
   MY_INSURANCE,
 } = routesPaths;
 
@@ -34,14 +32,6 @@ const routes = createBrowserRouter([
         element: (
           <Suspense fallback={<LoadingPage />}>
             <InsurancePlans />
-          </Suspense>
-        ) 
-      },
-      { 
-        path: CONNECT_WALLET, 
-        element: (
-          <Suspense fallback={<LoadingPage />}>
-            <ConnectWallet />
           </Suspense>
         ) 
       },

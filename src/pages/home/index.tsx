@@ -1,9 +1,9 @@
-import Footer from './component/Footer';
-import Hero from './component/Hero';
-import Features from './component/Features';
-import Testimonials from './component/Testimonials';
-import CallToAction from './component/CallToAction';
-import HowItWorks from './component/HowItWorks';
+import Footer from './components/Footer';
+import Hero from './components/Hero';
+import Features from './components/Features';
+import Testimonials from './components/Testimonials';
+import CallToAction from './components/CallToAction';
+import HowItWorks from './components/HowItWorks';
 
 
 const Home = () => {
