@@ -3,17 +3,53 @@ import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { routesPaths } from "@/types/constants/routes";
-import { WalletIcon, ShieldIcon, HomeIcon, MenuIcon, XIcon, LayoutDashboardIcon } from "lucide-react";
+import { WalletIcon, ShieldIcon, HomeIcon, MenuIcon, XIcon, LayoutDashboardIcon, LogOutIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GlowButton } from "@/components/ui/glow-button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { toast } from "sonner";
 
 const PageLayout = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [, setIsDropdownOpen] = useState(false);
   const location = useLocation();
-  const { ROOT, INSURANCE_PLANS, CONNECT_WALLET, MY_INSURANCE } = routesPaths;
+  const { ROOT, INSURANCE_PLANS, MY_INSURANCE } = routesPaths;
+
+  // Wagmi hooks
+  const { address, isConnected } = useAccount();
+  const { connect, connectors, isPending } = useConnect();
+  const { disconnect } = useDisconnect();
+
+  // Handle wallet connection
+  const handleConnectWallet = async () => {
+    try {
+      if (isConnected) {
+        disconnect();
+        toast.success("Wallet has been disconnected");
+      } else {
+        if (typeof window !== 'undefined' && window.ethereum) {
+          const metaMaskConnector = connectors.find(c => c.name === 'MetaMask');
+          
+          if (metaMaskConnector) {
+            connect({ connector: metaMaskConnector });
+          } else {
+            if (connectors.length > 0) {
+              connect({ connector: connectors[0] });
+            } else {
+              toast.error("No wallet connectors available");
+            }
+          }
+        } else {
+          toast.error("Please install MetaMask wallet");
+        }
+      }
+    } catch (error) {
+      toast.error("Wallet connection failed");
+      console.error("Wallet connection error:", error);
+    }
+  };
 
   // Close mobile menu when path changes
   useEffect(() => {
@@ -36,6 +72,11 @@ const PageLayout = () => {
     { path: INSURANCE_PLANS, label: 'Insurance Plans', icon: <ShieldIcon className="h-4 w-4" /> },
     { path: MY_INSURANCE, label: 'My Insurance', icon: <LayoutDashboardIcon className="h-4 w-4" /> },
   ];
+
+  // Format wallet address for display
+  const formatAddress = (address: string) => {
+    return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -96,18 +137,24 @@ const PageLayout = () => {
                 </NavLink>
               ))}
               <ThemeToggle />
-              <NavLink 
-                to={CONNECT_WALLET}
-                className={({ isActive }) => cn(
-                  "ml-2",
-                  isActive ? "opacity-80" : ""
-                )}
+              <GlowButton 
+                size="sm" 
+                className="flex items-center gap-1.5 ml-2"
+                onClick={handleConnectWallet}
+                disabled={isPending}
               >
-                <GlowButton size="sm" className="flex items-center gap-1.5">
-                  <WalletIcon className="h-4 w-4" />
-                  Connect Wallet
-                </GlowButton>
-              </NavLink>
+                {isConnected ? (
+                  <>
+                    <LogOutIcon className="h-4 w-4" />
+                    {formatAddress(address || '')}
+                  </>
+                ) : (
+                  <>
+                    <WalletIcon className="h-4 w-4" />
+                    {isPending ? "Connecting..." : "Connect Wallet"}
+                  </>
+                )}
+              </GlowButton>
             </nav>
 
             {/* Mobile menu button */}
@@ -153,7 +200,7 @@ const PageLayout = () => {
                   <NavLink 
                     to={item.path}
                     className={({ isActive }) => cn(
-                      "block px-3 py-2 rounded-md text-sm font-medium flex items-center gap-1.5 transition-all",
+                      "px-3 py-2 rounded-md text-sm font-medium flex items-center gap-1.5 transition-all",
                       isActive 
                         ? "bg-primary/10 text-primary" 
                         : "text-foreground/70 hover:text-primary hover:bg-primary/5"
@@ -169,13 +216,23 @@ const PageLayout = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: navItems.length * 0.05, duration: 0.3 }}
               >
-                <NavLink 
-                  to={CONNECT_WALLET}
-                  className="block px-3 py-2 rounded-md text-sm font-medium flex items-center gap-1.5 bg-gradient-to-r from-primary/20 to-cyan-500/20 text-primary mt-2"
+                <Button 
+                  onClick={handleConnectWallet}
+                  disabled={isPending}
+                  className="w-full px-3 py-2 rounded-md text-sm font-medium flex items-center gap-1.5 bg-gradient-to-r from-primary/20 to-cyan-500/20 text-primary mt-2"
                 >
-                  <WalletIcon className="h-4 w-4" />
-                  Connect Wallet
-                </NavLink>
+                  {isConnected ? (
+                    <>
+                      <LogOutIcon className="h-4 w-4" />
+                      {formatAddress(address || '')}
+                    </>
+                  ) : (
+                    <>
+                      <WalletIcon className="h-4 w-4" />
+                      {isPending ? "Connecting..." : "Connect Wallet"}
+                    </>
+                  )}
+                </Button>
               </motion.div>
             </div>
           </motion.div>

@@ -11,20 +11,23 @@ import "@fontsource/inter/400-italic.css";
 
 const App = lazy(() => import("./App"));
 import './index.css'
+import { WagmiProvider } from "@/app/providers/wallet/WagmiProvider";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary>
       {/* <I18nProvider> */}
-        <Provider store={store}>
-          <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-            <Suspense fallback={<LoadingPage/>}>
+      <Provider store={store}>
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <WagmiProvider>
+            <Suspense fallback={<LoadingPage />}>
               <App />
               <Toaster />
             </Suspense>
-          </ThemeProvider>
-        </Provider>
+          </WagmiProvider>
+        </ThemeProvider>
+      </Provider>
       {/* </I18nProvider> */}
     </ErrorBoundary>
-   </StrictMode>
+  </StrictMode>
 )
