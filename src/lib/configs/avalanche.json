@@ -46,156 +46,85 @@
     "inputs": [
       {
         "indexed": true,
-        "internalType": "uint256",
-        "name": "policyId",
-        "type": "uint256"
-      },
+        "internalType": "bytes32",
+        "name": "id",
+        "type": "bytes32"
+      }
+    ],
+    "name": "ChainlinkCancelled",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "id",
+        "type": "bytes32"
+      }
+    ],
+    "name": "ChainlinkFulfilled",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "id",
+        "type": "bytes32"
+      }
+    ],
+    "name": "ChainlinkRequested",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
       {
         "indexed": true,
         "internalType": "address",
-        "name": "policyholder",
+        "name": "owner",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "claimAmount",
+        "name": "amount",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "string",
-        "name": "reason",
+        "name": "tokenType",
         "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
       }
     ],
-    "name": "ClaimSubmitted",
+    "name": "EmergencyWithdraw",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "packageId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "priceAVAX",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "priceUSDC",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "isActive",
-        "type": "bool"
-      }
-    ],
-    "name": "InsurancePackageCreated",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "packageId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "priceAVAX",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "priceUSDC",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "isActive",
-        "type": "bool"
-      }
-    ],
-    "name": "InsurancePackageUpdated",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "policyId",
-        "type": "uint256"
-      },
       {
         "indexed": true,
         "internalType": "address",
-        "name": "policyholder",
+        "name": "user",
         "type": "address"
       },
       {
-        "indexed": true,
-        "internalType": "uint256",
+        "indexed": false,
+        "internalType": "string",
         "name": "packageId",
-        "type": "uint256"
+        "type": "string"
       },
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "latitude",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "longitude",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "startDate",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "endDate",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
       },
       {
         "indexed": false,
@@ -205,8 +134,26 @@
       },
       {
         "indexed": false,
+        "internalType": "int32",
+        "name": "lat",
+        "type": "int32"
+      },
+      {
+        "indexed": false,
+        "internalType": "int32",
+        "name": "lon",
+        "type": "int32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "startDate",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
         "internalType": "string",
-        "name": "paymentToken",
+        "name": "tokenType",
         "type": "string"
       },
       {
@@ -223,19 +170,19 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "oldWallet",
-        "type": "address"
+        "indexed": false,
+        "internalType": "enum AgriculturalInsurance.LogType",
+        "name": "logType",
+        "type": "uint8"
       },
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "newWallet",
-        "type": "address"
+        "indexed": false,
+        "internalType": "string",
+        "name": "message",
+        "type": "string"
       }
     ],
-    "name": "MasterWalletChanged",
+    "name": "Log",
     "type": "event"
   },
   {
@@ -284,13 +231,63 @@
     "type": "event"
   },
   {
-    "inputs": [],
-    "name": "USDC_ADDRESS",
-    "outputs": [
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "requestId",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "weatherValue",
+        "type": "int256"
+      }
+    ],
+    "name": "WeatherDataReceived",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "requestId",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "int32",
+        "name": "lat",
+        "type": "int32"
+      },
+      {
+        "indexed": false,
+        "internalType": "int32",
+        "name": "lon",
+        "type": "int32"
+      }
+    ],
+    "name": "WeatherDataRequested",
+    "type": "event"
+  },
+  {
+    "inputs": [
       {
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "name": "allowedERC20Tokens",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -312,180 +309,120 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "packageId",
-        "type": "uint256"
+        "internalType": "int32",
+        "name": "lat",
+        "type": "int32"
       },
       {
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
+        "internalType": "int32",
+        "name": "lon",
+        "type": "int32"
+      }
+    ],
+    "name": "deactivateLocation",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "depositLink",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "emergencyWithdrawAVAX",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "priceAVAX",
+        "name": "amount",
         "type": "uint256"
+      }
+    ],
+    "name": "emergencyWithdrawERC20",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "requestId",
+        "type": "bytes32"
       },
       {
-        "internalType": "uint256",
-        "name": "priceUSDC",
-        "type": "uint256"
+        "internalType": "int256",
+        "name": "weatherValue",
+        "type": "int256"
       },
+      {
+        "internalType": "int32",
+        "name": "lat",
+        "type": "int32"
+      },
+      {
+        "internalType": "int32",
+        "name": "lon",
+        "type": "int32"
+      }
+    ],
+    "name": "fulfillWeatherData",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getLinkBalance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "name": "isActive",
+    "outputs": [
       {
         "internalType": "bool",
-        "name": "isActive",
+        "name": "",
         "type": "bool"
-      }
-    ],
-    "name": "createOrUpdatePackage",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "emergencyWithdraw",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "emergencyWithdrawUSDC",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "packageId",
-        "type": "uint256"
-      }
-    ],
-    "name": "getPackage",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "packageId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "string",
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "internalType": "uint256",
-            "name": "priceAVAX",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "priceUSDC",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "isActive",
-            "type": "bool"
-          }
-        ],
-        "internalType": "struct AgriculturalInsurance.InsurancePackage",
-        "name": "",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "policyId",
-        "type": "uint256"
-      }
-    ],
-    "name": "getPolicy",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "policyId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "policyholder",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "packageId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "latitude",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "longitude",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "startDate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "endDate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "premiumAmount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "isActive",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "isClaimed",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "createdAt",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct AgriculturalInsurance.InsurancePolicy",
-        "name": "",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getTotalPolicies",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -495,73 +432,16 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "user",
+        "name": "tokenAddress",
         "type": "address"
       }
     ],
-    "name": "getUserPolicies",
+    "name": "isTokenAllowed",
     "outputs": [
       {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "policyId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "policyholder",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "packageId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "latitude",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "longitude",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "startDate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "endDate",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "premiumAmount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "isActive",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "isClaimed",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "createdAt",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct AgriculturalInsurance.InsurancePolicy[]",
+        "internalType": "bool",
         "name": "",
-        "type": "tuple[]"
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -570,37 +450,22 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "bytes32",
         "name": "",
-        "type": "uint256"
+        "type": "bytes32"
       }
     ],
-    "name": "insurancePackages",
+    "name": "locations",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "packageId",
-        "type": "uint256"
+        "internalType": "int32",
+        "name": "lat",
+        "type": "int32"
       },
       {
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "priceAVAX",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "priceUSDC",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "isActive",
-        "type": "bool"
+        "internalType": "int32",
+        "name": "lon",
+        "type": "int32"
       }
     ],
     "stateMutability": "view",
@@ -655,46 +520,23 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "policies",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "policyId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "policyholder",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
+        "internalType": "string",
         "name": "packageId",
-        "type": "uint256"
+        "type": "string"
       },
       {
-        "internalType": "uint256",
-        "name": "latitude",
-        "type": "uint256"
+        "internalType": "int32",
+        "name": "lat",
+        "type": "int32"
       },
       {
-        "internalType": "uint256",
-        "name": "longitude",
-        "type": "uint256"
+        "internalType": "int32",
+        "name": "lon",
+        "type": "int32"
       },
       {
         "internalType": "uint256",
         "name": "startDate",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "endDate",
         "type": "uint256"
       },
       {
@@ -703,78 +545,47 @@
         "type": "uint256"
       },
       {
-        "internalType": "bool",
-        "name": "isActive",
-        "type": "bool"
-      },
-      {
-        "internalType": "bool",
-        "name": "isClaimed",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "createdAt",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
       }
     ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "packageId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "latitude",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "longitude",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "startDate",
-        "type": "uint256"
-      }
-    ],
-    "name": "purchaseInsuranceWithAVAX",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "packageId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "latitude",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "longitude",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "startDate",
-        "type": "uint256"
-      }
-    ],
-    "name": "purchaseInsuranceWithUSDC",
+    "name": "purchaseInsuranceWithERC20",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "packageId",
+        "type": "string"
+      },
+      {
+        "internalType": "int32",
+        "name": "lat",
+        "type": "int32"
+      },
+      {
+        "internalType": "int32",
+        "name": "lon",
+        "type": "int32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "startDate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "premiumAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "purchaseInsuranceWithNative",
+    "outputs": [],
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -787,17 +598,69 @@
   {
     "inputs": [
       {
+        "internalType": "int32",
+        "name": "lat",
+        "type": "int32"
+      },
+      {
+        "internalType": "int32",
+        "name": "lon",
+        "type": "int32"
+      }
+    ],
+    "name": "requestWeatherData",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "requestId",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_oracle",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_jobId",
+        "type": "bytes32"
+      },
+      {
         "internalType": "uint256",
-        "name": "policyId",
+        "name": "_fee",
         "type": "uint256"
       },
       {
-        "internalType": "string",
-        "name": "reason",
-        "type": "string"
+        "internalType": "address",
+        "name": "_linkToken",
+        "type": "address"
       }
     ],
-    "name": "submitClaim",
+    "name": "setChainlinkOracle",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "allowed",
+        "type": "bool"
+      }
+    ],
+    "name": "setTokenAllowed",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -825,75 +688,38 @@
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "bytes32",
         "name": "",
-        "type": "address"
+        "type": "bytes32"
       },
       {
-        "internalType": "uint256",
+        "internalType": "bytes32",
         "name": "",
-        "type": "uint256"
+        "type": "bytes32"
       }
     ],
-    "name": "userPolicies",
+    "name": "weatherDataByLocation",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "policyId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "policyholder",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "packageId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "latitude",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "longitude",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "startDate",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "endDate",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "premiumAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "isActive",
-        "type": "bool"
-      },
-      {
-        "internalType": "bool",
-        "name": "isClaimed",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "createdAt",
-        "type": "uint256"
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdrawLink",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

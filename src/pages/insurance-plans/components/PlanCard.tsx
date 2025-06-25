@@ -1,29 +1,193 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { GlowButton } from "@/components/ui/glow-button";
 import type { IInsurancePackageResponse } from "@/types/interfaces/insurance-package";
 import { motion } from "framer-motion";
-import { ArrowRightIcon, CheckIcon, InfoIcon, ShieldIcon } from "lucide-react";
-import { useState } from "react";
-import { useAccount, useConnect } from "wagmi";
+import { CheckIcon, InfoIcon, ShieldIcon } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useAccount } from "wagmi";
 import { toast } from "sonner";
-import { usePurchaseInsuranceWithAVAX } from "@/lib/hooks/usePurchaseInsuranceWithAVAX";
-import { usePurchaseInsuranceWithUSDC, purchaseInsurance, purchaseInsuranceWithUSDC } from "@/lib/hooks/usePurchaseInsuranceWithUSDC";
-import { Button } from "@/components/ui/button";
+import { 
+  usePurchaseInsuranceWithNative, 
+  usePurchaseInsuranceWithUSDC, 
+  purchaseInsuranceWithNative, 
+  purchaseInsuranceWithUSDC, 
+  useApproveUSDC 
+} from "@/lib/hooks/useInsurance";
 
 const PlanCard = ({ plan, index }: { plan: IInsurancePackageResponse; index: number }) => {
-  const [, setIsPurchasing] = useState(false);
-  
-  // Wagmi hooks
+  const [isPurchasing, setIsPurchasing] = useState(false);
+  const [isApproving, setIsApproving] = useState(false);
+  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [locationError, setLocationError] = useState<string | null>(null);
+  const [purchaseData, setPurchaseData] = useState<{
+    value: bigint;
+    packageId: string;
+    latitude: number;
+    longitude: number;
+    startDate: number;
+  } | null>(null);
+
   const { isConnected } = useAccount();
-  const { connect, connectors
-    // , isPending 
-  } = useConnect();
-  const { writeContract: writeContractAVAX
-    // , isPending: isPendingAVAX 
-  } = usePurchaseInsuranceWithAVAX();
-  const { writeContract: writeContractUSDC
-    // , isPending: isPendingUSDC 
-  } = usePurchaseInsuranceWithUSDC();
-  
+  const { writeContract: writeContractNative, isPending: isPendingNative } = usePurchaseInsuranceWithNative();
+  const { writeContract: writeContractUSDC, isPending: isPendingUSDC } = usePurchaseInsuranceWithUSDC();
+  const {
+    approveUSDC,
+    // hash: approveHash,
+    isApprovePending,
+    isWaitingForTransaction,
+    isApproveConfirmed,
+    resetApprovalState
+  } = useApproveUSDC();
+
+  // Sửa useEffect để reset state sau khi purchase thành công
+  useEffect(() => {
+    const purchaseAfterApproval = async () => {
+      if (isApproveConfirmed && purchaseData) {
+        try {
+          setIsPurchasing(true);
+          toast.info("Approval successful! Proceeding with purchase...");
+          await purchaseInsuranceWithUSDC({
+            writeContract: writeContractUSDC,
+            packageId: purchaseData.packageId,
+            latitude: purchaseData.latitude,
+            longitude: purchaseData.longitude,
+            startDate: purchaseData.startDate,
+            amount: purchaseData.value
+          });
+          toast.success("Insurance purchase with USDC initiated!");
+        } catch (error) {
+          console.error("Error purchasing after approval:", error);
+          toast.error("Failed to purchase insurance after approval. Please try again.");
+        } finally {
+          setIsPurchasing(false);
+          setPurchaseData(null); // Clear purchase data after attempting purchase
+        }
+      }
+    };
+
+    purchaseAfterApproval();
+  }, [isApproveConfirmed, purchaseData, resetApprovalState, writeContractUSDC]);
+
+  const handlePurchaseInsurance = async () => {
+    if (!isConnected) {
+      toast.error("Please connect your wallet first");
+      return;
+    }
+    
+    if (!userLocation) {
+      toast.error(locationError || "Vui lòng cho phép truy cập vị trí để tiếp tục");
+      return;
+    }
+
+    const isUSDC = plan.cryptoCurrency.toLowerCase() === 'usdc';
+
+    try {
+      if (isWaitingForTransaction && isApproveConfirmed) {
+        toast.info("Đang chờ xác nhận giao dịch. Vui lòng đợi...");
+        return;
+      }
+
+      if (isUSDC && !isApproveConfirmed) {
+        setIsApproving(true);
+        const startDate = Math.floor(Date.now() / 1000) + 3600;
+        const value = BigInt(Math.floor(plan.price * 10 ** 6));
+        const latitude = Math.floor(userLocation.lat * 10 ** 6);
+        const longitude = Math.floor(userLocation.lng * 10 ** 6);
+        const packageId = plan.id;
+
+        setPurchaseData({
+          value,
+          packageId,
+          latitude,
+          longitude,
+          startDate
+        });
+        
+        await approveUSDC(value);
+        await purchaseInsuranceWithUSDC({
+          writeContract: writeContractUSDC,
+          packageId: purchaseData?.packageId ?? plan.id,
+          latitude: purchaseData?.latitude ?? Math.floor(userLocation.lat * 10 ** 6),
+          longitude: purchaseData?.longitude ?? Math.floor(userLocation.lng * 10 ** 6),
+          startDate: purchaseData?.startDate ?? Math.floor(Date.now() / 1000) + 3600,
+          amount: purchaseData?.value ?? BigInt(Math.floor(plan.price * 10 ** 6))
+        });
+        toast.success("USDC approval initiated! Waiting for confirmation...");
+      } else if (isUSDC && isApproveConfirmed) {
+        if (!purchaseData) {
+          console.log(107);
+
+          toast.error("Không có dữ liệu mua bảo hiểm, vui lòng thử lại bước approve.");
+          return;
+        }
+        console.log(112);
+
+        setIsPurchasing(true);
+        await purchaseInsuranceWithUSDC({
+          writeContract: writeContractUSDC,
+          packageId: purchaseData.packageId,
+          latitude: purchaseData.latitude,
+          longitude: purchaseData.longitude,
+          startDate: purchaseData.startDate,
+          amount: purchaseData.value
+        });
+        console.log(123);
+
+        toast.success("Insurance purchase with USDC initiated!");
+
+        
+      }
+      else { 
+        setIsPurchasing(true);
+        const startDate = Math.floor(Date.now() / 1000) + 3600;
+        const value = BigInt(Math.floor(plan.price * 10 ** 18));
+        console.log(131);
+
+        await purchaseInsuranceWithNative({
+          writeContract: writeContractNative,
+          packageId: plan.id,
+          latitude: Math.floor(userLocation.lat * 10 ** 7),
+          longitude: Math.floor(userLocation.lng * 10 ** 7),
+          startDate,
+          value
+        });
+
+        toast.success("Insurance purchase with Native Currency initiated!");
+      }
+    } catch (error) {
+      console.error("Error in insurance process:", error);
+      console.log(146);
+
+      toast.error(`Failed to ${isApproving ? 'approve USDC' : 'purchase insurance'}. Please try again.`);
+      if (isApproving) {
+        setPurchaseData(null);
+      }
+    } finally {
+      setIsPurchasing(false);
+      setIsApproving(false);
+    }
+  };
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          });
+          setLocationError(null);
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+          setLocationError("Không thể lấy vị trí của bạn. Vui lòng cho phép truy cập vị trí.");
+        }
+      );
+    } else {
+      setLocationError("Trình duyệt của bạn không hỗ trợ định vị.");
+    }
+  }, []);
+
   const determineCategory = (plan: IInsurancePackageResponse): 'basic' | 'premium' | 'enterprise' => {
     if (plan.price < 0.1) return 'basic';
     if (plan.price < 0.3) return 'premium';
@@ -31,18 +195,18 @@ const PlanCard = ({ plan, index }: { plan: IInsurancePackageResponse; index: num
   };
 
   const category = determineCategory(plan);
-  
+
   const getFeatures = (plan: IInsurancePackageResponse, category: string): string[] => {
     const baseFeatures = [
       `Insurance up to ${plan.payoutAmount} ${plan.cryptoCurrency}`,
       `Protection against ${plan.riskType}`,
       `${plan.durationDays}-day insurance period`,
     ];
-    
+
     if (category === 'basic') {
       return [...baseFeatures, 'Basic customer support'];
     }
-    
+
     if (category === 'premium') {
       return [
         ...baseFeatures,
@@ -51,7 +215,7 @@ const PlanCard = ({ plan, index }: { plan: IInsurancePackageResponse; index: num
         'Wallet recovery support',
       ];
     }
-    
+
     return [
       ...baseFeatures,
       'DeFi protocol insurance',
@@ -64,83 +228,35 @@ const PlanCard = ({ plan, index }: { plan: IInsurancePackageResponse; index: num
 
   const features = getFeatures(plan, category);
   const isRecommended = category === 'premium';
-  
-  const handleConnectWallet = async () => {
-    try {
-      if (!isConnected) {
-        if (typeof window !== 'undefined' && window.ethereum) {
-          const metaMaskConnector = connectors.find(c => c.name === 'MetaMask');
-          
-          if (metaMaskConnector) {
-            await connect({ connector: metaMaskConnector });
-            toast.success("Wallet connected successfully");
-            return true;
-          } else {
-            if (connectors.length > 0) {
-              await connect({ connector: connectors[0] });
-              toast.success("Wallet connected successfully");
-              return true;
-            } else {
-              toast.error("No wallet connectors available");
-              return false;
-            }
-          }
-        } else {
-          toast.error("Please install MetaMask wallet");
-          return false;
-        }
-      }
-      return true;
-    } catch (error) {
-      toast.error("Wallet connection failed");
-      console.error("Wallet connection error:", error);
-      return false;
-    }
-  };
-  
-  const handlePurchase = async () => {
-    setIsPurchasing(true);
-    try {
-      const isWalletConnected = await handleConnectWallet();
-      if (!isWalletConnected) {
-        setIsPurchasing(false);
-        return;
-      }
-      
-      const packageId = plan.id;
-      const latitude = 0; 
-      const longitude = 0; 
-      const startDate = Math.floor(Date.now() / 1000);
-      
-      if (plan.cryptoCurrency.toUpperCase() === 'AVAX') {
-        const value = BigInt(Math.floor(plan.price * 10**18));
-        await purchaseInsurance({
-          writeContract: writeContractAVAX,
-          packageId,
-          latitude,
-          longitude,
-          startDate,
-          value,
-        });
-        toast.success("Insurance purchase initiated with AVAX");
-      } else if (plan.cryptoCurrency.toUpperCase() === 'USDC') {
-        await purchaseInsuranceWithUSDC({
-          writeContract: writeContractUSDC,
-          packageId,
-          latitude,
-          longitude,
-          startDate,
-          // amount,
-        });
-        toast.success("Insurance purchase initiated with USDC");
-      } else {
-        toast.error(`Unsupported currency: ${plan.cryptoCurrency}`);
-      }
-    } catch (error) {
-      console.error("Purchase error:", error);
-      toast.error("Failed to purchase insurance");
-    } finally {
-      setIsPurchasing(false);
+
+  // Xác định nội dung nút
+  // const getButtonText = () => {
+  //   const isUSDC = plan.cryptoCurrency.toLowerCase() === 'usdc';
+
+  //   if (isUSDC) {
+  //     if (isApprovePending) return "Approving USDC...";
+  //     if (isWaitingForTransaction) return "Waiting for approval confirmation...";
+  //     if (isPendingUSDC) return "Processing purchase...";
+  //     if (isPurchasing) return "Processing...";
+  //     if (!isApproveConfirmed) return "Approve & Buy with USDC";
+  //     return "Buy with USDC";
+  //   } else {
+  //     if (isPendingNative) return "Processing purchase...";
+  //     if (isPurchasing) return "Processing...";
+  //     return `Buy with ${plan.cryptoCurrency}`;
+  //   }
+  // };
+
+  // Xác định trạng thái disabled của nút
+  const isButtonDisabled = () => {
+    const isUSDC = plan.cryptoCurrency.toLowerCase() === 'usdc';
+
+    if (isUSDC) {
+      // Chỉ disable nút khi đang trong quá trình xử lý, không disable khi đang chờ xác nhận
+      return isPurchasing || isApproving || isApprovePending ||
+        (isApproveConfirmed && isPendingUSDC);
+    } else {
+      return isPurchasing || isPendingNative;
     }
   };
 
@@ -178,7 +294,7 @@ const PlanCard = ({ plan, index }: { plan: IInsurancePackageResponse; index: num
               <span>Insurance up to {plan.payoutAmount} {plan.cryptoCurrency} for {plan.durationDays} days</span>
             </div>
           </div>
-          
+
           <ul className="space-y-2 mb-6">
             {features.map((feature, i) => (
               <li key={i} className="flex items-start gap-2">
@@ -188,22 +304,23 @@ const PlanCard = ({ plan, index }: { plan: IInsurancePackageResponse; index: num
             ))}
           </ul>
 
-          <Button onClick={handlePurchase}>  <ArrowRightIcon className="h-4 w-4 ml-1" />Sign Up Now</Button>
-          {/* <div className="mt-auto pt-4">
-            <GlowButton 
-              className="w-full justify-center" 
-              glowColor="rgba(0, 212, 255, 0.3)"
-              onClick={handlePurchase}
+          <GlowButton
+            className="w-full justify-center mt-auto"
+            glowColor="rgba(0, 212, 255, 0.3)"
+            onClick={handlePurchaseInsurance}
+            disabled={isButtonDisabled()}
+          >
+            {/* {getButtonText()} */}
+            Buy Now
+          </GlowButton>
 
-            >
-              {isPurchasing || isPendingAVAX || isPendingUSDC ? 'Processing...' : 'Sign Up Now'} 
-            
-            </GlowButton>
-          </div> */}
+          {locationError && (
+            <p className="text-red-500 text-xs mt-2">{locationError}</p>
+          )}
         </CardContent>
       </Card>
     </motion.div>
   );
 };
 
-export default PlanCard
+export default PlanCard;
