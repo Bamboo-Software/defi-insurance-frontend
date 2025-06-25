@@ -1,8 +1,13 @@
 import { GlowButton } from "@/components/ui/glow-button";
 import { motion } from "framer-motion";
 import { PlusIcon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { routesPaths } from "@/types/constants/routes";
+
+const { INSURANCE_PLANS } = routesPaths;
 
 const HeroSection = () => {
+  const navigate = useNavigate()
   return (
     <section className="relative py-16 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background z-0"></div>
@@ -29,7 +34,7 @@ const HeroSection = () => {
                 Manage and track all your blockchain insurance contracts in one place
               </p>
             </div>
-            <GlowButton className="flex items-center gap-1.5">
+            <GlowButton onClick={() => navigate(INSURANCE_PLANS)} className="flex items-center gap-1.5">
               <PlusIcon className="h-4 w-4" />
               New Contract
             </GlowButton>

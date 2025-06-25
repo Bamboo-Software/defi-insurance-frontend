@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { GlowButton } from "@/components/ui/glow-button";
+import { Button } from "@/components/ui/button";
 import type { IInsurancePackageResponse } from "@/types/interfaces/insurance-package";
 import { motion } from "framer-motion";
 import { CheckIcon, InfoIcon, ShieldIcon } from "lucide-react";
@@ -13,12 +13,14 @@ import {
   purchaseInsuranceWithUSDC, 
   useApproveUSDC 
 } from "@/lib/hooks/useInsurance";
+import PlanDetailsModal from "./PlanDetailsModal";
 
 const PlanCard = ({ plan, index }: { plan: IInsurancePackageResponse; index: number }) => {
   const [isPurchasing, setIsPurchasing] = useState(false);
   const [isApproving, setIsApproving] = useState(false);
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [purchaseData, setPurchaseData] = useState<{
     value: bigint;
     packageId: string;
@@ -32,14 +34,12 @@ const PlanCard = ({ plan, index }: { plan: IInsurancePackageResponse; index: num
   const { writeContract: writeContractUSDC, isPending: isPendingUSDC } = usePurchaseInsuranceWithUSDC();
   const {
     approveUSDC,
-    // hash: approveHash,
     isApprovePending,
     isWaitingForTransaction,
     isApproveConfirmed,
     resetApprovalState
   } = useApproveUSDC();
 
-  // Sửa useEffect để reset state sau khi purchase thành công
   useEffect(() => {
     const purchaseAfterApproval = async () => {
       if (isApproveConfirmed && purchaseData) {
@@ -229,24 +229,6 @@ const PlanCard = ({ plan, index }: { plan: IInsurancePackageResponse; index: num
   const features = getFeatures(plan, category);
   const isRecommended = category === 'premium';
 
-  // Xác định nội dung nút
-  // const getButtonText = () => {
-  //   const isUSDC = plan.cryptoCurrency.toLowerCase() === 'usdc';
-
-  //   if (isUSDC) {
-  //     if (isApprovePending) return "Approving USDC...";
-  //     if (isWaitingForTransaction) return "Waiting for approval confirmation...";
-  //     if (isPendingUSDC) return "Processing purchase...";
-  //     if (isPurchasing) return "Processing...";
-  //     if (!isApproveConfirmed) return "Approve & Buy with USDC";
-  //     return "Buy with USDC";
-  //   } else {
-  //     if (isPendingNative) return "Processing purchase...";
-  //     if (isPurchasing) return "Processing...";
-  //     return `Buy with ${plan.cryptoCurrency}`;
-  //   }
-  // };
-
   // Xác định trạng thái disabled của nút
   const isButtonDisabled = () => {
     const isUSDC = plan.cryptoCurrency.toLowerCase() === 'usdc';
@@ -261,65 +243,83 @@ const PlanCard = ({ plan, index }: { plan: IInsurancePackageResponse; index: num
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-    >
-      <Card className={`h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 ${isRecommended ? 'border-primary/50 shadow-md shadow-primary/20' : 'border-border'}`}>
-        {isRecommended && (
-          <div className="bg-gradient-to-r from-primary to-cyan-500 text-white text-xs font-medium px-3 py-1 text-center">
-            RECOMMENDED
-          </div>
-        )}
-        <CardHeader>
-          <div className="flex justify-between items-start">
-            <div>
-              <CardTitle className="text-2xl font-bold">{plan.name}</CardTitle>
-              <CardDescription className="mt-2">{plan.description}</CardDescription>
+    <>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: index * 0.1 }}
+      >
+        <Card className={`h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 ${isRecommended ? 'border-primary/50 shadow-md shadow-primary/20' : 'border-border'}`}>
+          {isRecommended && (
+            <div className="bg-gradient-to-r from-primary to-cyan-500 text-white text-xs font-medium px-3 py-1 text-center">
+              RECOMMENDED
             </div>
-            <div className="bg-primary/10 p-2 rounded-full">
-              <ShieldIcon className="h-6 w-6 text-primary" />
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="flex flex-col h-full">
-          <div className="mb-6">
-            <div className="flex items-end gap-1 mb-1">
-              <span className="text-3xl font-bold">{plan.price}</span>
-              <span className="text-lg font-medium">{plan.cryptoCurrency}</span>
-            </div>
-            <div className="text-sm text-foreground/70 flex items-center gap-1">
-              <InfoIcon className="h-3 w-3" />
-              <span>Insurance up to {plan.payoutAmount} {plan.cryptoCurrency} for {plan.durationDays} days</span>
-            </div>
-          </div>
-
-          <ul className="space-y-2 mb-6">
-            {features.map((feature, i) => (
-              <li key={i} className="flex items-start gap-2">
-                <CheckIcon className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                <span className="text-sm">{feature}</span>
-              </li>
-            ))}
-          </ul>
-
-          <GlowButton
-            className="w-full justify-center mt-auto"
-            glowColor="rgba(0, 212, 255, 0.3)"
-            onClick={handlePurchaseInsurance}
-            disabled={isButtonDisabled()}
-          >
-            {/* {getButtonText()} */}
-            Buy Now
-          </GlowButton>
-
-          {locationError && (
-            <p className="text-red-500 text-xs mt-2">{locationError}</p>
           )}
-        </CardContent>
-      </Card>
-    </motion.div>
+          <CardHeader>
+            <div className="flex justify-between items-start">
+              <div>
+                <CardTitle className="text-2xl font-bold">{plan.name}</CardTitle>
+                <CardDescription className="mt-2">{plan.description}</CardDescription>
+              </div>
+              <div className="bg-primary/10 p-2 rounded-full">
+                <ShieldIcon className="h-6 w-6 text-primary" />
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="flex flex-col h-full">
+            <div className="mb-6">
+              <div className="flex items-end gap-1 mb-1">
+                <span className="text-3xl font-bold">{plan.price}</span>
+                <span className="text-lg font-medium">{plan.cryptoCurrency}</span>
+              </div>
+              <div className="text-sm text-foreground/70 flex items-center gap-1">
+                <InfoIcon className="h-3 w-3" />
+                <span>Insurance up to {plan.payoutAmount} {plan.cryptoCurrency} for {plan.durationDays} days</span>
+              </div>
+            </div>
+
+            <ul className="space-y-2 mb-6">
+              {features.map((feature, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <CheckIcon className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                  <span className="text-sm">{feature}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="w-full space-y-3 ">
+              <Button
+                className="w-full justify-center h-10"
+                // glowColor="rgba(0, 212, 255, 0.3)"
+                onClick={handlePurchaseInsurance}
+                disabled={isButtonDisabled()}
+              >
+                Buy Now
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                className="w-full justify-center h-10"
+                onClick={() => setIsDetailsModalOpen(true)}
+              >
+                <InfoIcon className="mr-1 h-4 w-4" />
+                More Details
+              </Button>
+            </div>
+
+            {locationError && (
+              <p className="text-red-500 text-xs mt-2">{locationError}</p>
+            )}
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      <PlanDetailsModal
+        isOpen={isDetailsModalOpen}
+        onClose={() => setIsDetailsModalOpen(false)}
+        plan={plan}
+      />
+    </>
   );
 };
 

@@ -4,8 +4,13 @@ import { motion } from "framer-motion";
 import { CloudRain, Sun, Sprout, Droplets, Leaf, ArrowRightIcon } from "lucide-react";
 import BlockchainParticles from "@/components/ui/blockchain-particles";
 import BlockchainCube from "@/components/ui/blockchain-cube";
+import { useNavigate } from "react-router-dom";
+import { routesPaths } from "@/types/constants/routes";
+
+const { INSURANCE_PLANS } = routesPaths;
 
 const Hero = () => {
+  const navigate =  useNavigate();
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Enhanced animated gradient background */}
@@ -275,7 +280,9 @@ const Hero = () => {
   Protect your crops with a smart insurance solution based on weather data and blockchain technology
 </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <GlowButton size="lg" className="mr-4" glowColor="rgba(var(--primary-rgb), 0.4)">
+          <GlowButton onClick={() => navigate(INSURANCE_PLANS)} size="lg" className="mr-4" glowColor="rgba(var(--primary-rgb), 0.4)">
+
+
   Explore Insurance Plans
 </GlowButton>
 <Button variant="outline" size="lg" className="flex items-center gap-2">

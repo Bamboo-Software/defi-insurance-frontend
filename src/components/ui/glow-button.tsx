@@ -30,7 +30,7 @@ export function GlowButton({
   
   return (
     <motion.div
-      className="relative inline-block"
+      className="relative inline-block cursor-pointer"
       whileHover={{ scale: hoverScale }}
       transition={{ type: 'spring', stiffness: 400, damping: 10 }}
     >
