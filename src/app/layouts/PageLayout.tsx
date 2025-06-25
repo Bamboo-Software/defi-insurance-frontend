@@ -68,9 +68,9 @@ const PageLayout = () => {
   }, []);
 
   const navItems = [
-    { path: ROOT, label: 'Home', icon: <HomeIcon className="h-4 w-4" /> },
-    { path: INSURANCE_PLANS, label: 'Insurance Plans', icon: <ShieldIcon className="h-4 w-4" /> },
-    { path: MY_INSURANCE, label: 'My Insurance', icon: <LayoutDashboardIcon className="h-4 w-4" /> },
+    { path: ROOT, label: 'Home', icon: <HomeIcon className="h-4 w-4" />, disable: true },
+    { path: INSURANCE_PLANS, label: 'Insurance Plans', icon: <ShieldIcon className="h-4 w-4" />, disable: true },
+    { path: MY_INSURANCE, label: 'My Insurance', icon: <LayoutDashboardIcon className="h-4 w-4" />, disable: true },
   ];
 
   // Format wallet address for display
@@ -190,14 +190,18 @@ const PageLayout = () => {
             transition={{ duration: 0.3 }}
           >
             <div className="container mx-auto px-4 py-3 space-y-1">
-              {navItems.map((item, index) => (
-                <motion.div
+              {navItems.map((item, index) => {
+
+                
+                return (
+                  <motion.div
                   key={item.path}
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05, duration: 0.3 }}
                 >
                   <NavLink 
+                  
                     to={item.path}
                     className={({ isActive }) => cn(
                       "px-3 py-2 rounded-md text-sm font-medium flex items-center gap-1.5 transition-all",
@@ -210,7 +214,9 @@ const PageLayout = () => {
                     {item.label}
                   </NavLink>
                 </motion.div>
-              ))}
+                )
+              
+              })}
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}

@@ -19,10 +19,10 @@ const MyInsurance = () => {
   const [activeTab, setActiveTab] = useState<StatusType>('all');
   const [searchQuery, setSearchQuery] = useState('');
   
-  const { address } = useAccount();
+  const { isConnected, address } = useAccount();
   
   const { data: transactionsData, isLoading, error } = useGetInsuranceTransactionsQuery({
-    walletAddress: address || '',
+    walletAddress: isConnected ? address || '' : '',
     page: 1,
     limit: 50,
     q: '',
@@ -40,8 +40,23 @@ const MyInsurance = () => {
       </div>
     );
   }
-  
-  if (error) {
+
+  if (!isConnected) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto p-6 bg-card border border-destructive/20 rounded-lg">
+          <AlertCircleIcon className="h-12 w-12 text-destructive mx-auto mb-4" />
+          <h2 className="text-xl font-semibold mb-2">Please connect your wallet</h2>
+          <p className="text-foreground/70 mb-4">
+            Please connect your wallet to load your insurance contracts.
+          </p>
+          {/* <Button variant="outline">
+            Connect Wallet
+          </Button> */}
+        </div>
+      </div>
+    );
+  }else if (error) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center max-w-md mx-auto p-6 bg-card border border-destructive/20 rounded-lg">
@@ -57,6 +72,7 @@ const MyInsurance = () => {
       </div>
     );
   }
+  
   
   const transactions = transactionsData?.data.items || [];
   
