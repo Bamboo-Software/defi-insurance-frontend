@@ -1,12 +1,17 @@
 import { GlowButton } from "@/components/ui/glow-button";
 import { motion } from "framer-motion";
 import { PlusIcon, ShieldIcon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { routesPaths } from "@/types/constants/routes";
+
+const { INSURANCE_PLANS } = routesPaths;
 
 interface EmptyStateProps {
   searchQuery: string;
 }
 
 const EmptyState = ({ searchQuery }: EmptyStateProps) => {
+  const navigate = useNavigate();
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -23,7 +28,7 @@ const EmptyState = ({ searchQuery }: EmptyStateProps) => {
           ? "No contracts match your search criteria. Try adjusting your filters."
           : "You don't have any insurance contracts yet."}
       </p>
-      <GlowButton>
+      <GlowButton onClick={() => navigate(INSURANCE_PLANS)}>
         <PlusIcon className="mr-2 h-4 w-4" />
         Register Your First Contract
       </GlowButton>
