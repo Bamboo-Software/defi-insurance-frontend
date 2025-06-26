@@ -5,6 +5,7 @@ import { AlertCircleIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { useGetInsuranceTransactionsQuery } from '@/app/services/insurance/transaction';
+import { PurchaseStatusEnum, PayoutStatusEnum } from '@/types/enums/common.enum';
 import HeroSection from './components/HeroSection';
 import FilterBar from './components/FilterBar';
 import PolicyCard from './components/PolicyCard';
@@ -86,13 +87,13 @@ const MyInsurance = () => {
       
       switch (activeTab) {
         case 'active':
-          return transaction.purchaseStatus === 'paid' && endDate > now && transaction.payoutStatus !== 'completed';
+          return transaction.purchaseStatus === PurchaseStatusEnum.PAID && endDate > now && transaction.payoutStatus !== PayoutStatusEnum.COMPLETED;
         case 'expired':
-          return endDate < now && transaction.payoutStatus !== 'completed';
+          return endDate < now && transaction.payoutStatus !== PayoutStatusEnum.COMPLETED;
         case 'pending':
-          return transaction.purchaseStatus === 'awaiting_payment';
+          return transaction.purchaseStatus === PurchaseStatusEnum.AWAITING_PAYMENT;
         case 'claimed':
-          return transaction.payoutStatus === 'completed';
+          return transaction.payoutStatus === PayoutStatusEnum.COMPLETED;
         default:
           return true;
       }
