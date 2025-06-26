@@ -5,8 +5,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { GlowButton } from "@/components/ui/glow-button";
 import { formatDate } from "@/lib/utils/dateUtils";
 import { motion } from "framer-motion";
-import { AlertCircleIcon, CheckCircleIcon, ClockIcon, FileTextIcon, PlusIcon, ShieldIcon } from "lucide-react";
+import { AlertCircleIcon, CheckCircleIcon, ClockIcon, FileTextIcon, PlusIcon, ShieldIcon, HelpCircleIcon } from "lucide-react";
+import { PurchaseStatusEnum, PayoutStatusEnum } from "@/types/enums/common.enum";
 import PolicyDetailsModal from "./PolicyDetailsModal";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface PolicyCardProps {
   transaction: any;
@@ -16,60 +23,109 @@ interface PolicyCardProps {
 const PolicyCard = ({ transaction, index }: PolicyCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const mapStatusFromTransaction = (transaction: any): 'active' | 'expired' | 'pending' | 'claimed' => {
-    const now = new Date();
-    const endDate = new Date(transaction.insuredPeriod.end);
-    
-    if (transaction.payoutStatus === 'completed') {
-      return 'claimed';
-    } else if (transaction.purchaseStatus === 'awaiting_payment') {
-      return 'pending';
-    } else if (endDate < now) {
-      return 'expired';
-    } else {
-      return 'active';
-    }
-  };
-  
-  const status = mapStatusFromTransaction(transaction);
-  
-  const getStatusDetails = (status: 'active' | 'expired' | 'pending' | 'claimed') => {
+  // Lấy thông tin trạng thái từ purchaseStatus
+  const getPurchaseStatusDetails = (status: string) => {
     switch (status) {
-      case 'active':
+      case PurchaseStatusEnum.PAID:
         return { 
           icon: <CheckCircleIcon className="h-5 w-5" />, 
           color: 'text-green-500',
-          bgColor: 'bg-green-500/10'
+          bgColor: 'bg-green-500/10',
+          label: 'Paid',
+          description: 'Payment has been successfully processed and confirmed.'
         };
-      case 'expired':
-        return { 
-          icon: <AlertCircleIcon className="h-5 w-5" />, 
-          color: 'text-orange-500',
-          bgColor: 'bg-orange-500/10'
-        };
-      case 'pending':
+      case PurchaseStatusEnum.AWAITING_PAYMENT:
         return { 
           icon: <ClockIcon className="h-5 w-5" />, 
           color: 'text-blue-500',
-          bgColor: 'bg-blue-500/10'
+          bgColor: 'bg-blue-500/10',
+          label: 'Awaiting Payment',
+          description: 'Your payment is being processed or waiting for confirmation.'
         };
-      case 'claimed':
+      case PurchaseStatusEnum.PAYOUT_FAILED:
         return { 
-          icon: <FileTextIcon className="h-5 w-5" />, 
-          color: 'text-purple-500',
-          bgColor: 'bg-purple-500/10'
+          icon: <AlertCircleIcon className="h-5 w-5" />, 
+          color: 'text-red-500',
+          bgColor: 'bg-red-500/10',
+          label: 'Payout Failed',
+          description: 'There was an issue processing the payout. Please contact support.'
         };
       default:
         return { 
           icon: <ShieldIcon className="h-5 w-5" />, 
           color: 'text-primary',
-          bgColor: 'bg-primary/10'
+          bgColor: 'bg-primary/10',
+          label: 'Unknown',
+          description: 'Status information is not available.'
         };
     }
   };
+  
+  // Lấy thông tin trạng thái từ payoutStatus
+  const getPayoutStatusDetails = (status: string) => {
+    switch (status) {
+      case PayoutStatusEnum.PENDING:
+        return { 
+          icon: <ClockIcon className="h-5 w-5" />, 
+          color: 'text-yellow-500',
+          bgColor: 'bg-yellow-500/10',
+          label: 'Pending',
+          description: 'Your claim is being processed and is pending review.'
+        };
+      case PayoutStatusEnum.PAID:
+        return { 
+          icon: <FileTextIcon className="h-5 w-5" />, 
+          color: 'text-purple-500',
+          bgColor: 'bg-purple-500/10',
+          label: 'Paid',
+          description: 'Your claim has been approved and payment has been issued.'
+        };
+      case PayoutStatusEnum.EXPIRED:
+        return { 
+          icon: <AlertCircleIcon className="h-5 w-5" />, 
+          color: 'text-orange-500',
+          bgColor: 'bg-orange-500/10',
+          label: 'Expired',
+          description: 'The insurance policy has expired and is no longer active.'
+        };
+      case PayoutStatusEnum.REJECTED:
+        return { 
+          icon: <AlertCircleIcon className="h-5 w-5" />, 
+          color: 'text-red-500',
+          bgColor: 'bg-red-500/10',
+          label: 'Rejected',
+          description: 'Your claim has been reviewed and was not approved.'
+        };
+      case PayoutStatusEnum.COMPLETED:
+        return { 
+          icon: <FileTextIcon className="h-5 w-5" />, 
+          color: 'text-purple-500',
+          bgColor: 'bg-purple-500/10',
+          label: 'Completed',
+          description: 'The claim process has been completed successfully.'
+        };
+      default:
+        return { 
+          icon: <ShieldIcon className="h-5 w-5" />, 
+          color: 'text-primary',
+          bgColor: 'bg-primary/10',
+          label: 'Unknown',
+          description: 'Status information is not available.'
+        };
+    }
+  };
+  
+  // Kiểm tra xem hợp đồng đã hết hạn chưa
+  const isExpired = () => {
+    const now = new Date();
+    const endDate = new Date(transaction.insuredPeriod.end);
+    return endDate < now;
+  };
+  
+  const purchaseStatusDetails = getPurchaseStatusDetails(transaction.purchaseStatus);
+  const payoutStatusDetails = getPayoutStatusDetails(transaction.payoutStatus);
 
   
-  const { icon, color, bgColor } = getStatusDetails(status);
   const packageData = transaction.package;
   
   return (
@@ -86,8 +142,8 @@ const PolicyCard = ({ transaction, index }: PolicyCardProps) => {
               {/* Phần bên trái với chi tiết hợp đồng */}
               <div className="md:col-span-9 p-6">
                 <div className="flex items-start gap-4">
-                  <div className={`${bgColor} p-3 rounded-full`}>
-                    <ShieldIcon className={`h-6 w-6 ${color}`} />
+                  <div className={`${purchaseStatusDetails.bgColor} p-3 rounded-full`}>
+                    <ShieldIcon className={`h-6 w-6 ${purchaseStatusDetails.color}`} />
                   </div>
                   
                   <div className="flex-1">
@@ -101,11 +157,57 @@ const PolicyCard = ({ transaction, index }: PolicyCardProps) => {
                         </div>
                       </div>
                       
-                      <div className={`flex items-center gap-1.5 ${color} text-sm font-medium px-3 py-1 rounded-full ${bgColor}`}>
-                        {icon}
-                        <span className="capitalize">
-                          {status}
-                        </span>
+                      <div className="flex flex-col gap-1">
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div className={`flex items-center gap-1.5 ${purchaseStatusDetails.color} text-sm font-medium px-3 py-1 rounded-full ${purchaseStatusDetails.bgColor} cursor-help`}>
+                                {purchaseStatusDetails.icon}
+                                <span>
+                                  <span className="font-semibold">Purchase:</span> {purchaseStatusDetails.label}
+                                </span>
+                                <HelpCircleIcon className="h-3.5 w-3.5 ml-1 opacity-70" />
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>{purchaseStatusDetails.description}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                        
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div className={`flex items-center gap-1.5 ${payoutStatusDetails.color} text-sm font-medium px-3 py-1 rounded-full ${payoutStatusDetails.bgColor} cursor-help`}>
+                                {payoutStatusDetails.icon}
+                                <span>
+                                  <span className="font-semibold">Payout:</span> {payoutStatusDetails.label}
+                                </span>
+                                <HelpCircleIcon className="h-3.5 w-3.5 ml-1 opacity-70" />
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>{payoutStatusDetails.description}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                        
+                        {isExpired() && (
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <div className="flex items-center gap-1.5 text-orange-500 text-sm font-medium px-3 py-1 rounded-full bg-orange-500/10 cursor-help">
+                                  <AlertCircleIcon className="h-5 w-5" />
+                                  <span><span className="font-semibold">Status:</span> Expired</span>
+                                  <HelpCircleIcon className="h-3.5 w-3.5 ml-1 opacity-70" />
+                                </div>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>This insurance policy has expired and is no longer active. You may renew it if eligible.</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        )}
                       </div>
                     </div>
                     
@@ -147,24 +249,24 @@ const PolicyCard = ({ transaction, index }: PolicyCardProps) => {
                     View Details
                   </Button>
                   
-                  {status === 'active' && (
+                  {transaction.purchaseStatus === PurchaseStatusEnum.PAID && !isExpired() && transaction.payoutStatus !== PayoutStatusEnum.PAID && (
                     <Button variant="outline" className="w-full justify-center">
                       <AlertCircleIcon className="mr-1 h-4 w-4" />
                       File Claim
                     </Button>
                   )}
                   
-                  {status === 'expired' && (
+                  {isExpired() && transaction.payoutStatus !== PayoutStatusEnum.PAID && (
                     <GlowButton className="w-full justify-start">
                       <PlusIcon className="mr-2 h-4 w-4" />
                       Renew Contract
                     </GlowButton>
                   )}
                   
-                  {status === 'pending' && (
+                  {transaction.purchaseStatus === PurchaseStatusEnum.AWAITING_PAYMENT && (
                     <Button variant="outline" className="w-full justify-start">
                       <ClockIcon className="mr-2 h-4 w-4" />
-                      Check Status
+                      Complete Payment
                     </Button>
                   )}
                 </div>
