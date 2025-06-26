@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { WagmiProvider as WagmiProviderCore, createConfig, http } from 'wagmi';
-import { mainnet, sepolia } from 'wagmi/chains';
+import { avalancheFuji, mainnet, sepolia } from 'wagmi/chains';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { metaMask } from 'wagmi/connectors'
 
@@ -11,10 +11,11 @@ interface WagmiProviderProps {
 const queryClient = new QueryClient();
 
 const config = createConfig({
-  chains: [mainnet, sepolia],
+  chains: [mainnet, sepolia, avalancheFuji],
   transports: {
     [mainnet.id]: http(),
     [sepolia.id]: http(),
+    [avalancheFuji.id]: http(),
   },
   connectors: [
     metaMask(),

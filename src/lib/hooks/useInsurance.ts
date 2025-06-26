@@ -155,7 +155,8 @@ export function useApproveUSDC() {
     },
   });
 
-  const { isLoading: isWaitingForTransaction, isSuccess: transactionSuccess } = useWaitForTransactionReceipt({
+  const { isLoading: isWaitingForTransaction, isSuccess: transactionSuccess, isError: isTransactionError } = useWaitForTransactionReceipt({
+
     hash,
   });
 
@@ -189,9 +190,11 @@ export function useApproveUSDC() {
   return {
     approveUSDC,
     hash,
+    isTransactionError,
     isApprovePending,         
     isWaitingForTransaction, 
     isApproveConfirmed,  
+    transactionSuccess,
     resetApprovalState,  
     error                     
   };
