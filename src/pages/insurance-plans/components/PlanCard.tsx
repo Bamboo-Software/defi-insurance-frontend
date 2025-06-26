@@ -6,12 +6,12 @@ import { CheckIcon, InfoIcon, ShieldIcon } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAccount } from "wagmi";
 import { toast } from "sonner";
-import { 
-  usePurchaseInsuranceWithNative, 
-  usePurchaseInsuranceWithUSDC, 
-  purchaseInsuranceWithNative, 
-  purchaseInsuranceWithUSDC, 
-  useApproveUSDC 
+import {
+  usePurchaseInsuranceWithNative,
+  usePurchaseInsuranceWithUSDC,
+  purchaseInsuranceWithNative,
+  purchaseInsuranceWithUSDC,
+  useApproveUSDC
 } from "@/lib/hooks/useInsurance";
 import PlanDetailsModal from "./PlanDetailsModal";
 
@@ -37,7 +37,7 @@ const PlanCard = ({ plan, index }: { plan: IInsurancePackageResponse; index: num
     isApprovePending,
     isWaitingForTransaction,
     isApproveConfirmed,
-    resetApprovalState
+    // resetApprovalState
   } = useApproveUSDC();
 
   useEffect(() => {
@@ -60,20 +60,20 @@ const PlanCard = ({ plan, index }: { plan: IInsurancePackageResponse; index: num
           toast.error("Failed to purchase insurance after approval. Please try again.");
         } finally {
           setIsPurchasing(false);
-          setPurchaseData(null); // Clear purchase data after attempting purchase
+          setPurchaseData(null);
         }
       }
     };
 
     purchaseAfterApproval();
-  }, [isApproveConfirmed, purchaseData, resetApprovalState, writeContractUSDC]);
+  }, [isApproveConfirmed, purchaseData, writeContractUSDC]);
 
   const handlePurchaseInsurance = async () => {
     if (!isConnected) {
       toast.error("Please connect your wallet first");
       return;
     }
-    
+
     if (!userLocation) {
       toast.error(locationError || "Vui lòng cho phép truy cập vị trí để tiếp tục");
       return;
@@ -102,42 +102,42 @@ const PlanCard = ({ plan, index }: { plan: IInsurancePackageResponse; index: num
           longitude,
           startDate
         });
-        
-        await approveUSDC(value);
-        await purchaseInsuranceWithUSDC({
+        const inputVal = {
           writeContract: writeContractUSDC,
           packageId: purchaseData?.packageId ?? plan.id,
           latitude: purchaseData?.latitude ?? Math.floor(userLocation.lat * 10 ** 6),
           longitude: purchaseData?.longitude ?? Math.floor(userLocation.lng * 10 ** 6),
           startDate: purchaseData?.startDate ?? Math.floor(Date.now() / 1000) + 3600,
-          amount: purchaseData?.value ?? BigInt(Math.floor(plan.price * 10 ** 6))
-        });
-        toast.success("USDC approval initiated! Waiting for confirmation...");
-      } else if (isUSDC && isApproveConfirmed) {
-        if (!purchaseData) {
-          console.log(107);
-
-          toast.error("Không có dữ liệu mua bảo hiểm, vui lòng thử lại bước approve.");
-          return;
+          amount: purchaseData?.value ?? BigInt(Math.floor(plan.price * 10 ** 6)).toString()
         }
-        console.log(112);
+        const approveResult = await approveUSDC(value);
+        console.log("approveResult: ", approveResult + "\n inputVal: ", inputVal);
 
-        setIsPurchasing(true);
-        await purchaseInsuranceWithUSDC({
-          writeContract: writeContractUSDC,
-          packageId: purchaseData.packageId,
-          latitude: purchaseData.latitude,
-          longitude: purchaseData.longitude,
-          startDate: purchaseData.startDate,
-          amount: purchaseData.value
-        });
-        console.log(123);
-
-        toast.success("Insurance purchase with USDC initiated!");
-
-        
+        // setInterval(() => {
+        //   if (isWaitingForTransaction) {
+        //     toast.info("Waiting for transaction confirmation...");
+        //   } else if (isTransactionError) {
+        //     toast.error("Transaction failed. Please try again.");
+        //     resetApprovalState();
+        //   } else {
+        //     toast.success("USDC approval initiated! Waiting for confirmation...");
+        //     setIsPurchasing(true);
+        //     purchaseInsuranceWithUSDC({
+        //       writeContract: writeContractUSDC,
+        //       packageId: purchaseData?.packageId ?? plan.id,
+        //       latitude: purchaseData?.latitude ?? Math.floor(userLocation.lat * 10 ** 6),
+        //       longitude: purchaseData?.longitude ?? Math.floor(userLocation.lng * 10 ** 6),
+        //       startDate: purchaseData?.startDate ?? Math.floor(Date.now() / 1000) + 3600,
+        //       amount: purchaseData?.value ?? BigInt(Math.floor(plan.price * 10 ** 6))
+        //     }).then(() => {
+        //       toast.success("Insurance purchase with USDC initiated!");
+        //       setIsPurchasing(false);
+        //     });
+        //   }
+        // }, 500)
       }
-      else { 
+
+      else {
         setIsPurchasing(true);
         const startDate = Math.floor(Date.now() / 1000) + 3600;
         const value = BigInt(Math.floor(plan.price * 10 ** 18));
@@ -296,9 +296,9 @@ const PlanCard = ({ plan, index }: { plan: IInsurancePackageResponse; index: num
               >
                 Buy Now
               </Button>
-              
-              <Button 
-                variant="outline" 
+
+              <Button
+                variant="outline"
                 className="w-full justify-center h-10"
                 onClick={() => setIsDetailsModalOpen(true)}
               >
