@@ -1,17 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, ShieldIcon, AlertCircleIcon, FileTextIcon, ClockIcon, CheckCircleIcon, HelpCircleIcon, PlusIcon } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { formatDate } from '@/lib/utils/dateUtils';
-import { PurchaseStatusEnum, PayoutStatusEnum } from '@/types/enums/common.enum';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, ShieldIcon, AlertCircleIcon, FileTextIcon, ClockIcon, CheckCircleIcon, HelpCircleIcon, PlusIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { formatDate } from "@/lib/utils/dateUtils";
+import { PurchaseStatusEnum, PayoutStatusEnum } from "@/types/enums/common.enum";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface PolicyDetailsModalProps {
   isOpen: boolean;
@@ -30,21 +25,21 @@ const PolicyDetailsModal = ({ isOpen, onClose, transaction }: PolicyDetailsModal
     };
 
     const handleEscapeKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (event.key === "Escape") {
         onClose();
       }
     };
 
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-      document.addEventListener('keydown', handleEscapeKey);
-      document.body.style.overflow = 'hidden';
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("keydown", handleEscapeKey);
+      document.body.style.overflow = "hidden";
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('keydown', handleEscapeKey);
-      document.body.style.overflow = 'auto';
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscapeKey);
+      document.body.style.overflow = "auto";
     };
   }, [isOpen, onClose]);
 
@@ -61,94 +56,94 @@ const PolicyDetailsModal = ({ isOpen, onClose, transaction }: PolicyDetailsModal
   const getPurchaseStatusDetails = (status: string) => {
     switch (status) {
       case PurchaseStatusEnum.PAID:
-        return { 
-          icon: <CheckCircleIcon className="h-5 w-5" />, 
-          color: 'text-green-500',
-          bgColor: 'bg-green-500/10',
-          label: 'Paid',
-          description: 'Payment has been successfully processed and confirmed.'
+        return {
+          icon: <CheckCircleIcon className="h-5 w-5" />,
+          color: "text-green-500",
+          bgColor: "bg-green-500/10",
+          label: "Paid",
+          description: "Payment has been successfully processed and confirmed.",
         };
       case PurchaseStatusEnum.AWAITING_PAYMENT:
-        return { 
-          icon: <ClockIcon className="h-5 w-5" />, 
-          color: 'text-blue-500',
-          bgColor: 'bg-blue-500/10',
-          label: 'Awaiting Payment',
-          description: 'Your payment is being processed or waiting for confirmation.'
+        return {
+          icon: <ClockIcon className="h-5 w-5" />,
+          color: "text-blue-500",
+          bgColor: "bg-blue-500/10",
+          label: "Awaiting Payment",
+          description: "Your payment is being processed or waiting for confirmation.",
         };
       case PurchaseStatusEnum.PAYOUT_FAILED:
-        return { 
-          icon: <AlertCircleIcon className="h-5 w-5" />, 
-          color: 'text-red-500',
-          bgColor: 'bg-red-500/10',
-          label: 'Payout Failed',
-          description: 'There was an issue processing the payout. Please contact support.'
+        return {
+          icon: <AlertCircleIcon className="h-5 w-5" />,
+          color: "text-red-500",
+          bgColor: "bg-red-500/10",
+          label: "Payout Failed",
+          description: "There was an issue processing the payout. Please contact support.",
         };
       default:
-        return { 
-          icon: <ShieldIcon className="h-5 w-5" />, 
-          color: 'text-primary',
-          bgColor: 'bg-primary/10',
-          label: 'Unknown',
-          description: 'Status information is not available.'
+        return {
+          icon: <ShieldIcon className="h-5 w-5" />,
+          color: "text-primary",
+          bgColor: "bg-primary/10",
+          label: "Unknown",
+          description: "Status information is not available.",
         };
     }
   };
-  
+
   // Lấy thông tin trạng thái từ payoutStatus
   const getPayoutStatusDetails = (status: string) => {
     switch (status) {
       case PayoutStatusEnum.PENDING:
-        return { 
-          icon: <ClockIcon className="h-5 w-5" />, 
-          color: 'text-yellow-500',
-          bgColor: 'bg-yellow-500/10',
-          label: 'Pending',
-          description: 'Your claim is being processed and is pending review.'
+        return {
+          icon: <ClockIcon className="h-5 w-5" />,
+          color: "text-yellow-500",
+          bgColor: "bg-yellow-500/10",
+          label: "Pending",
+          description: "Your claim is being processed and is pending review.",
         };
       case PayoutStatusEnum.PAID:
-        return { 
-          icon: <FileTextIcon className="h-5 w-5" />, 
-          color: 'text-purple-500',
-          bgColor: 'bg-purple-500/10',
-          label: 'Paid',
-          description: 'Your claim has been approved and payment has been issued.'
+        return {
+          icon: <FileTextIcon className="h-5 w-5" />,
+          color: "text-purple-500",
+          bgColor: "bg-purple-500/10",
+          label: "Paid",
+          description: "Your claim has been approved and payment has been issued.",
         };
       case PayoutStatusEnum.EXPIRED:
-        return { 
-          icon: <AlertCircleIcon className="h-5 w-5" />, 
-          color: 'text-orange-500',
-          bgColor: 'bg-orange-500/10',
-          label: 'Expired',
-          description: 'The insurance policy has expired and is no longer active.'
+        return {
+          icon: <AlertCircleIcon className="h-5 w-5" />,
+          color: "text-orange-500",
+          bgColor: "bg-orange-500/10",
+          label: "Expired",
+          description: "The insurance policy has expired and is no longer active.",
         };
       case PayoutStatusEnum.REJECTED:
-        return { 
-          icon: <AlertCircleIcon className="h-5 w-5" />, 
-          color: 'text-red-500',
-          bgColor: 'bg-red-500/10',
-          label: 'Rejected',
-          description: 'Your claim has been reviewed and was not approved.'
+        return {
+          icon: <AlertCircleIcon className="h-5 w-5" />,
+          color: "text-red-500",
+          bgColor: "bg-red-500/10",
+          label: "Rejected",
+          description: "Your claim has been reviewed and was not approved.",
         };
       case PayoutStatusEnum.COMPLETED:
-        return { 
-          icon: <FileTextIcon className="h-5 w-5" />, 
-          color: 'text-purple-500',
-          bgColor: 'bg-purple-500/10',
-          label: 'Completed',
-          description: 'The claim process has been completed successfully.'
+        return {
+          icon: <FileTextIcon className="h-5 w-5" />,
+          color: "text-purple-500",
+          bgColor: "bg-purple-500/10",
+          label: "Completed",
+          description: "The claim process has been completed successfully.",
         };
       default:
-        return { 
-          icon: <ShieldIcon className="h-5 w-5" />, 
-          color: 'text-primary',
-          bgColor: 'bg-primary/10',
-          label: 'Unknown',
-          description: 'Status information is not available.'
+        return {
+          icon: <ShieldIcon className="h-5 w-5" />,
+          color: "text-primary",
+          bgColor: "bg-primary/10",
+          label: "Unknown",
+          description: "Status information is not available.",
         };
     }
   };
-  
+
   const purchaseStatusDetails = getPurchaseStatusDetails(transaction.purchaseStatus);
   const payoutStatusDetails = getPayoutStatusDetails(transaction.payoutStatus);
   const packageData = transaction.package;
@@ -175,12 +170,7 @@ const PolicyDetailsModal = ({ isOpen, onClose, transaction }: PolicyDetailsModal
                       </div>
                       <h2 className="text-2xl font-bold">{packageData.name}</h2>
                     </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={onClose}
-                      className="rounded-full"
-                    >
+                    <Button variant="ghost" size="icon" onClick={onClose} className="rounded-full">
                       <X className="h-5 w-5" />
                     </Button>
                   </div>
@@ -207,7 +197,9 @@ const PolicyDetailsModal = ({ isOpen, onClose, transaction }: PolicyDetailsModal
                             <TooltipProvider>
                               <Tooltip>
                                 <TooltipTrigger asChild>
-                                  <div className={`inline-flex items-center gap-1.5 ${purchaseStatusDetails.color} text-sm font-medium px-3 py-1 rounded-full ${purchaseStatusDetails.bgColor} cursor-help`}>
+                                  <div
+                                    className={`inline-flex items-center gap-1.5 ${purchaseStatusDetails.color} text-sm font-medium px-3 py-1 rounded-full ${purchaseStatusDetails.bgColor} cursor-help`}
+                                  >
                                     {purchaseStatusDetails.icon}
                                     <span>
                                       <span className="font-semibold">Purchase:</span> {purchaseStatusDetails.label}
@@ -220,11 +212,13 @@ const PolicyDetailsModal = ({ isOpen, onClose, transaction }: PolicyDetailsModal
                                 </TooltipContent>
                               </Tooltip>
                             </TooltipProvider>
-                            
+
                             <TooltipProvider>
                               <Tooltip>
                                 <TooltipTrigger asChild>
-                                  <div className={`inline-flex items-center gap-1.5 ${payoutStatusDetails.color} text-sm font-medium px-3 py-1 rounded-full ${payoutStatusDetails.bgColor} cursor-help`}>
+                                  <div
+                                    className={`inline-flex items-center gap-1.5 ${payoutStatusDetails.color} text-sm font-medium px-3 py-1 rounded-full ${payoutStatusDetails.bgColor} cursor-help`}
+                                  >
                                     {payoutStatusDetails.icon}
                                     <span>
                                       <span className="font-semibold">Payout:</span> {payoutStatusDetails.label}
@@ -237,14 +231,16 @@ const PolicyDetailsModal = ({ isOpen, onClose, transaction }: PolicyDetailsModal
                                 </TooltipContent>
                               </Tooltip>
                             </TooltipProvider>
-                            
+
                             {isExpired() && (
                               <TooltipProvider>
                                 <Tooltip>
                                   <TooltipTrigger asChild>
                                     <div className="inline-flex items-center gap-1.5 text-orange-500 text-sm font-medium px-3 py-1 rounded-full bg-orange-500/10 cursor-help">
                                       <AlertCircleIcon className="h-5 w-5" />
-                                      <span><span className="font-semibold">Status:</span> Expired</span>
+                                      <span>
+                                        <span className="font-semibold">Status:</span> Expired
+                                      </span>
                                       <HelpCircleIcon className="h-3.5 w-3.5 ml-1 opacity-70" />
                                     </div>
                                   </TooltipTrigger>
@@ -264,11 +260,15 @@ const PolicyDetailsModal = ({ isOpen, onClose, transaction }: PolicyDetailsModal
                       <div className="space-y-3">
                         <div>
                           <div className="text-sm text-foreground/50">Insurance Amount</div>
-                          <div className="font-medium">{transaction.payoutAmount} {transaction.cryptoCurrency}</div>
+                          <div className="font-medium">
+                            {transaction.payoutAmount} {transaction.cryptoCurrency}
+                          </div>
                         </div>
                         <div>
                           <div className="text-sm text-foreground/50">Premium</div>
-                          <div className="font-medium">{transaction.paidAmount} {transaction.cryptoCurrency}</div>
+                          <div className="font-medium">
+                            {transaction.paidAmount} {transaction.cryptoCurrency}
+                          </div>
                         </div>
                         <div>
                           <div className="text-sm text-foreground/50">Start Date</div>
@@ -320,7 +320,7 @@ const PolicyDetailsModal = ({ isOpen, onClose, transaction }: PolicyDetailsModal
                         )}
                       </div>
                     </div>
-                    
+
                     <div>
                       <h3 className="text-lg font-semibold mb-3">Payment Information</h3>
                       <div className="space-y-3">
@@ -343,8 +343,14 @@ const PolicyDetailsModal = ({ isOpen, onClose, transaction }: PolicyDetailsModal
                           <div className="font-medium">{formatDate(transaction.purchaseAt)}</div>
                         </div>
                         <div>
-                          <div className="text-sm text-foreground/50">Transaction Hash</div>
+                          <div className="text-sm text-foreground/50">Purchase TxHash</div>
                           <div className="font-medium break-all">{transaction.purchaseTxHash}</div>
+                        </div>
+                        <div>
+                          <div className="text-sm text-foreground/50">Payout TxHash</div>
+                          <div className="font-medium break-all">
+                            {transaction.payoutTxHash ? transaction.payoutTxHash : <span className="text-foreground/40 italic">No payout transaction</span>}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -354,13 +360,13 @@ const PolicyDetailsModal = ({ isOpen, onClose, transaction }: PolicyDetailsModal
                       <div className="space-y-3">
                         <div>
                           <div className="text-sm text-foreground/50">Trigger Threshold</div>
-                          <div className="font-medium">{transaction.triggerThreshold} {packageData.triggerUnit}</div>
+                          <div className="font-medium">
+                            {transaction.triggerThreshold} {packageData.triggerUnit}
+                          </div>
                         </div>
                         <div>
                           <div className="text-sm text-foreground/50">Condition</div>
-                          <div className="font-medium capitalize">
-                            {packageData.triggerCondition === 'greater_than' ? 'Greater than' : 'Less than'}
-                          </div>
+                          <div className="font-medium capitalize">{packageData.triggerCondition === "greater_than" ? "Greater than" : "Less than"}</div>
                         </div>
                         <div>
                           <div className="text-sm text-foreground/50">Measurement Metric</div>
@@ -369,7 +375,7 @@ const PolicyDetailsModal = ({ isOpen, onClose, transaction }: PolicyDetailsModal
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="mt-8 border-t border-border pt-6">
                     <h3 className="text-lg font-semibold mb-4">Available Actions</h3>
                     <div className="flex flex-wrap gap-3">
@@ -379,21 +385,21 @@ const PolicyDetailsModal = ({ isOpen, onClose, transaction }: PolicyDetailsModal
                           File Claim
                         </Button>
                       )}
-                      
+
                       {isExpired() && transaction.payoutStatus !== PayoutStatusEnum.PAID && (
                         <Button className="justify-center bg-primary text-primary-foreground hover:bg-primary/90">
                           <PlusIcon className="mr-2 h-4 w-4" />
                           Renew Contract
                         </Button>
                       )}
-                      
+
                       {transaction.purchaseStatus === PurchaseStatusEnum.AWAITING_PAYMENT && (
                         <Button variant="outline" className="justify-center">
                           <ClockIcon className="mr-2 h-4 w-4" />
                           Complete Payment
                         </Button>
                       )}
-                      
+
                       <Button variant="outline" className="justify-center" onClick={onClose}>
                         <X className="mr-1 h-4 w-4" />
                         Close
